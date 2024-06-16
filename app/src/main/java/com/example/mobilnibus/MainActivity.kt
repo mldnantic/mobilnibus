@@ -47,6 +47,10 @@ fun MobilniBusApp()
                     }
                 )
             }
+            composable(Screens.Map.name)
+            {
+                MapScreen()
+            }
         }
     }
 }
