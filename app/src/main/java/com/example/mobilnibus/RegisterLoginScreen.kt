@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun RegisterLoginScreen() {
+fun RegisterLoginScreen(onKlik:()->Unit) {
     Surface {
         Column(modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -76,7 +76,7 @@ fun RegisterLoginScreen() {
             {
                 Text(text = "Registracija")
             }
-            ElevatedButton(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth())
+            ElevatedButton(onClick = { onKlik() }, modifier = Modifier.fillMaxWidth())
             {
                 Text(text = "Prijava")
             }
