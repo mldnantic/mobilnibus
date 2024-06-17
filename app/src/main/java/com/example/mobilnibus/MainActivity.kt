@@ -42,12 +42,21 @@ fun MobilniBusApp()
             composable(Screens.RegisterLogin.name)
             {
                 RegisterLoginScreen(
-                    onKlik = {
+                    onLogin = {
                         navController.navigate(Screens.Map.name)
+                    },
+                    onRegistracija =
+                    {
+                        navController.navigate(Screens.RegisterForm.name)
                     }
                 )
             }
-
+            composable(Screens.RegisterForm.name)
+            {
+                RegisterForm(onReg = {
+                    navController.popBackStack(Screens.RegisterLogin.name,inclusive = false)
+                })
+            }
             composable(Screens.Map.name)
             {
                 MapScreen()
@@ -59,5 +68,6 @@ fun MobilniBusApp()
 enum class Screens
 {
     RegisterLogin,
+    RegisterForm,
     Map
 }
