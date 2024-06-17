@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -24,7 +26,11 @@ fun RegisterLoginScreen(onLogin: () -> Unit, onRegistracija: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center) {
             
-            Text(text = "MobilniBus", fontSize = 64.sp, style = TextStyle.Default, fontWeight = FontWeight.ExtraLight)
+            Text(text = "MobilniBus", fontSize = 64.sp, style = TextStyle(
+                brush = Brush.linearGradient(
+                    colors=listOf(Color.Magenta, Color.Cyan)
+                )
+            ), fontFamily = FontFamily.Cursive)
 
             ElevatedButton(onClick = { onRegistracija() }, modifier = Modifier.fillMaxWidth())
             {
@@ -34,7 +40,7 @@ fun RegisterLoginScreen(onLogin: () -> Unit, onRegistracija: () -> Unit) {
             {
                 Text(text = "Prijava")
             }
-
+            Text(text = "©Mladen Antic 2024")
         }
     }
 }
