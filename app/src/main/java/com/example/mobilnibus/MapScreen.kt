@@ -1,12 +1,26 @@
 package com.example.mobilnibus
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalMapOf
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
@@ -25,10 +39,37 @@ fun MapScreen() {
     var properties by remember {
         mutableStateOf(MapProperties(mapType = MapType.NORMAL))
     }
-    GoogleMap(
-        modifier = Modifier.fillMaxSize(),
-        cameraPositionState = cameraPositionState,
-        properties = properties,
-        uiSettings = uiSettings
-    )
+    Surface {
+        Column(modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center) {
+            GoogleMap(
+                modifier = Modifier.fillMaxWidth().fillMaxHeight(fraction = 0.9f),
+                cameraPositionState = cameraPositionState,
+                properties = properties,
+                uiSettings = uiSettings
+            )
+            Row(modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center){
+                ElevatedButton(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxHeight().padding(2.dp,0.dp))
+                {
+                    Text(text = "Lokacija", fontSize = 10.sp)
+                }
+                ElevatedButton(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxHeight().padding(2.dp,0.dp))
+                {
+                    Text(text = "Stanice", fontSize = 10.sp)
+                }
+                ElevatedButton(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxHeight().padding(2.dp,0.dp))
+                {
+                    Text(text = "Podesavanja", fontSize = 10.sp)
+                }
+                ElevatedButton(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxHeight().padding(2.dp,0.dp))
+                {
+                    Text(text = "Odjava", fontSize = 10.sp)
+                }
+            }
+        }
+    }
+
+
 }
