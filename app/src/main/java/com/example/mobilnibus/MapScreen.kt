@@ -33,9 +33,13 @@ import com.google.maps.android.compose.rememberCameraPositionState
 fun MapScreen() {
     val nis = LatLng(43.321445, 21.896104)
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(nis, 100f)
+        position = CameraPosition.fromLatLngZoom(nis, 15f)
     }
-    var uiSettings by remember { mutableStateOf(MapUiSettings()) }
+    var uiSettings by remember { mutableStateOf(MapUiSettings(
+        zoomControlsEnabled = false,
+        tiltGesturesEnabled = false,
+        compassEnabled = false,
+        rotationGesturesEnabled = false)) }
     var properties by remember {
         mutableStateOf(MapProperties(mapType = MapType.NORMAL))
     }
@@ -53,23 +57,22 @@ fun MapScreen() {
                 horizontalArrangement = Arrangement.Center){
                 ElevatedButton(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxHeight().padding(2.dp,0.dp))
                 {
-                    Text(text = "Lokacija", fontSize = 10.sp)
+                    Text(text = "📌", fontSize = 32.sp)
                 }
                 ElevatedButton(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxHeight().padding(2.dp,0.dp))
                 {
-                    Text(text = "Stanice", fontSize = 10.sp)
+                    Text(text = "🚏", fontSize = 32.sp)
                 }
                 ElevatedButton(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxHeight().padding(2.dp,0.dp))
                 {
-                    Text(text = "Podesavanja", fontSize = 10.sp)
+                    Text(text = "🏅", fontSize = 32.sp)
                 }
                 ElevatedButton(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxHeight().padding(2.dp,0.dp))
                 {
-                    Text(text = "Odjava", fontSize = 10.sp)
+                    Text(text = "⚙️", fontSize = 32.sp)
                 }
             }
         }
     }
-
 
 }
