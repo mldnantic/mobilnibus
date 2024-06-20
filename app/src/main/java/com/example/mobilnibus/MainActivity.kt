@@ -9,12 +9,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.mobilnibus.screens.FormViewModel
+import com.example.mobilnibus.screens.MapScreen
+import com.example.mobilnibus.screens.RegisterForm
+import com.example.mobilnibus.screens.RegisterLoginScreen
 import com.example.mobilnibus.ui.theme.MobilniBusTheme
 
 class MainActivity : ComponentActivity() {
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -36,6 +44,7 @@ class MainActivity : ComponentActivity() {
 fun MobilniBusApp()
 {
     val navController = rememberNavController()
+    val formViewModel: FormViewModel = viewModel()
     Surface(modifier = Modifier.fillMaxSize()) {
         NavHost(navController = navController, startDestination = Screens.RegisterLogin.name)
         {
@@ -54,8 +63,9 @@ fun MobilniBusApp()
             composable(Screens.RegisterForm.name)
             {
                 RegisterForm(onReg = {
-                    navController.popBackStack(Screens.RegisterLogin.name,inclusive = false)
-                })
+                    navController.popBackStack()
+                },
+                    viewModel = formViewModel)
             }
             composable(Screens.Map.name)
             {

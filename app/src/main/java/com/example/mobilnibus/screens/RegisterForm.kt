@@ -1,10 +1,11 @@
-package com.example.mobilnibus
+package com.example.mobilnibus.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -13,11 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun RegisterForm(onReg: () -> Boolean)
+fun RegisterForm(onReg: () -> Unit,viewModel:FormViewModel)
 {
     Surface {
         Column(
@@ -29,16 +31,32 @@ fun RegisterForm(onReg: () -> Boolean)
                 horizontalAlignment = Alignment.Start
             )
             {
-                Text(text = "Korisnicko ime")
-                OutlinedTextField(value = "", onValueChange = {})
-                Text(text = "Sifra")
-                OutlinedTextField(value = "", onValueChange = {})
-                Text(text = "Ime")
-                OutlinedTextField(value = "", onValueChange = {})
-                Text(text = "Prezime")
-                OutlinedTextField(value = "", onValueChange = {})
-                Text(text = "Telefon")
-                OutlinedTextField(value = "", onValueChange = {})
+                OutlinedTextField(
+                    value = viewModel.username,
+                    onValueChange = {viewModel.username=it},
+                    label = {Text("Korisnicko ime")}
+                )
+                OutlinedTextField(
+                    value = viewModel.password,
+                    onValueChange = {viewModel.password=it},
+                    label = {Text("Sifra")}
+                )
+                OutlinedTextField(
+                    value = viewModel.ime,
+                    onValueChange = {viewModel.ime=it},
+                    label = {Text("Ime")}
+                )
+                OutlinedTextField(
+                    value = viewModel.prezime,
+                    onValueChange = {viewModel.prezime=it},
+                    label = {Text("Prezime")}
+                )
+                OutlinedTextField(
+                    value = viewModel.telefon,
+                    onValueChange = {viewModel.telefon=it},
+                    label = {Text("Telefon")},
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
+                )
             }
             ElevatedButton(onClick = { onReg() }, modifier = Modifier.fillMaxWidth())
             {

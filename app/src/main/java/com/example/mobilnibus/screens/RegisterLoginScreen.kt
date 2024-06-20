@@ -1,4 +1,4 @@
-package com.example.mobilnibus
+package com.example.mobilnibus.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
