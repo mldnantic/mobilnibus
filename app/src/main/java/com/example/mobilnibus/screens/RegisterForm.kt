@@ -58,7 +58,10 @@ fun RegisterForm(onReg: () -> Unit,viewModel:FormViewModel)
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
                 )
             }
-            ElevatedButton(onClick = { onReg() }, modifier = Modifier.fillMaxWidth())
+            ElevatedButton(onClick = {
+                viewModel.reset()
+                onReg() },
+                modifier = Modifier.fillMaxWidth())
             {
                 Text(text = "Registruj se")
             }
