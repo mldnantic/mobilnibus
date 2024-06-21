@@ -18,9 +18,6 @@ import com.example.mobilnibus.screens.MapScreen
 import com.example.mobilnibus.screens.RegisterForm
 import com.example.mobilnibus.screens.RegisterLoginScreen
 import com.example.mobilnibus.ui.theme.MobilniBusTheme
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 
 class MainActivity : ComponentActivity() {
 
