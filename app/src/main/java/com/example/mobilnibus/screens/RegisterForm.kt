@@ -17,9 +17,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun RegisterForm(onReg: () -> Unit,viewModel:FormViewModel)
+fun RegisterForm(auth:FirebaseAuth, onReg: () -> Unit,viewModel:FormViewModel)
 {
     Surface {
         Column(
@@ -32,8 +33,8 @@ fun RegisterForm(onReg: () -> Unit,viewModel:FormViewModel)
             )
             {
                 OutlinedTextField(
-                    value = viewModel.username,
-                    onValueChange = {viewModel.username=it},
+                    value = viewModel.email,
+                    onValueChange = {viewModel.email=it},
                     label = {Text("Korisnicko ime")}
                 )
                 OutlinedTextField(
@@ -59,7 +60,6 @@ fun RegisterForm(onReg: () -> Unit,viewModel:FormViewModel)
                 )
             }
             ElevatedButton(onClick = {
-                viewModel.reset()
                 onReg() },
                 modifier = Modifier.fillMaxWidth())
             {
