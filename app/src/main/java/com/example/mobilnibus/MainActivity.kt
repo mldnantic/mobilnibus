@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background)
             {
-                MobilniBusApp(auth, this, Screens.StartScreen)
+                MobilniBusApp(auth, this)
             }
         }
     }
@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
             setContent {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background)
                 {
-                    MobilniBusApp(auth, this, Screens.MapScreen)
+                    MobilniBusApp(auth, this)
                 }
             }
         }
@@ -53,11 +53,11 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity,screen:Screens) {
+fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity) {
     val navController = rememberNavController()
     val formViewModel: FormViewModel = viewModel()
 
-    NavHost(navController = navController, startDestination = screen.name) {
+    NavHost(navController = navController, startDestination = Screens.StartScreen.name) {
 
         composable(Screens.StartScreen.name)
         {

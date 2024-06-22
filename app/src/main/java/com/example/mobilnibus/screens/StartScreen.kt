@@ -3,6 +3,7 @@ package com.example.mobilnibus.screens
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ElevatedButton
@@ -12,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -24,7 +26,11 @@ import com.google.firebase.auth.FirebaseAuth
 @Composable
 fun StartScreen(auth: FirebaseAuth,mainActivity: MainActivity, formViewModel: FormViewModel,navigateToMap:()->Unit)
 {
-    fun createUserWithEmailAndPassword(auth: FirebaseAuth,mainActivity: MainActivity,email:String,password:String)
+    fun createUserWithEmailAndPassword(
+        auth: FirebaseAuth,
+        mainActivity: MainActivity,
+        email:String,
+        password:String)
     {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(mainActivity) { task ->
@@ -35,11 +41,38 @@ fun StartScreen(auth: FirebaseAuth,mainActivity: MainActivity, formViewModel: Fo
                 } else {
                     Toast.makeText(
                         mainActivity,
-                        "Authentication failed.",
+                        "Registration failed.",
                         Toast.LENGTH_SHORT,
                     ).show()
                 }
             }
+    }
+
+    fun signInWithEmailAndPassword(
+        auth: FirebaseAuth,
+        mainActivity: MainActivity,
+        email: String,
+        password: String)
+    {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(mainActivity) { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    formViewModel.reset()
+                    navigateToMap()
+                } else {
+                    Toast.makeText(
+                        mainActivity,
+                        "Login failed.",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                }
+            }
+    }
+
+    if(auth.currentUser!=null)
+    {
+        navigateToMap()
     }
 
     Surface{
@@ -66,17 +99,29 @@ fun StartScreen(auth: FirebaseAuth,mainActivity: MainActivity, formViewModel: Fo
                 onValueChange = { formViewModel.password = it },
                 label = { Text("Password") }
             )
-            ElevatedButton(
-                onClick = {createUserWithEmailAndPassword(auth,mainActivity,formViewModel.email,formViewModel.password)},
-                modifier = Modifier.fillMaxWidth()
-            )
-            {
-                Text(text = "Registruj se")
+            Row(modifier = Modifier.fillMaxWidth()){
+                ElevatedButton(
+                    onClick = {createUserWithEmailAndPassword(auth,mainActivity,formViewModel.email,formViewModel.password)},
+                    modifier = Modifier.fillMaxWidth(0.5f)
+                )
+                {
+                    Text(text = "Register")
+                }
+                ElevatedButton(
+                    onClick = {signInWithEmailAndPassword(auth,mainActivity,formViewModel.email,formViewModel.password)},
+                    modifier = Modifier.fillMaxWidth()
+                )
+                {
+                    Text(text = "Login")
+                }
             }
+
             Text(modifier = Modifier.padding(32.dp),
                 text = "Da bi ste mogli da koristite aplikaciju potrebno je da ste prijavljeni na nalog",
                 fontSize = 10.sp,
                 color = Color.DarkGray)
+            Text(text = "©Mladen Antic 2024")
+
         }
     }
 }
