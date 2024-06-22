@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.currentComposer
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -15,6 +16,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilnibus.screens.FormViewModel
 import com.example.mobilnibus.screens.MapScreen
+import com.example.mobilnibus.screens.SettingsScreen
 import com.example.mobilnibus.screens.StartScreen
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -68,15 +70,19 @@ fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity) {
 
         composable(Screens.MapScreen.name)
         {
-            MapScreen(currentUser = auth.currentUser)
+            MapScreen(auth,
+                navigateToSettings = {navController.navigate(Screens.SettingsScreen.name)})
         }
 
-        //Settings
+        composable(Screens.SettingsScreen.name)
+        {
+            SettingsScreen(auth, navigateToStart = {navController.popBackStack(Screens.StartScreen.name,inclusive = false)})
+        }
     }
 }
 
 enum class Screens{
     StartScreen,
     MapScreen,
-    Settings
+    SettingsScreen
 }
