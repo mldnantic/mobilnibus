@@ -88,18 +88,18 @@ fun StartScreen(auth: FirebaseAuth,mainActivity: MainActivity, formViewModel: Fo
                     brush = Brush.linearGradient(colors=listOf(Color.Magenta, Color.Cyan),)),
                 fontFamily = FontFamily.Cursive)
             OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(24.dp,0.dp),
                 value = formViewModel.email,
                 onValueChange = { formViewModel.email = it },
                 label = { Text("Email") }
             )
             OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(24.dp,0.dp),
                 value = formViewModel.password,
                 onValueChange = { formViewModel.password = it },
                 label = { Text("Password") }
             )
-            Row(modifier = Modifier.fillMaxWidth()){
+            Row(modifier = Modifier.fillMaxWidth().padding(24.dp,0.dp)){
                 ElevatedButton(
                     onClick = {createUserWithEmailAndPassword(auth,mainActivity,formViewModel.email,formViewModel.password)},
                     modifier = Modifier.fillMaxWidth(0.5f)
@@ -117,7 +117,7 @@ fun StartScreen(auth: FirebaseAuth,mainActivity: MainActivity, formViewModel: Fo
             }
 
             Text(modifier = Modifier.padding(32.dp),
-                text = "Da bi ste mogli da koristite aplikaciju potrebno je da ste prijavljeni na nalog",
+                text = "Da bi ste mogli da koristite aplikaciju potrebno je da se registrujete",
                 fontSize = 10.sp,
                 color = Color.DarkGray)
             Text(text = "©Mladen Antic 2024")

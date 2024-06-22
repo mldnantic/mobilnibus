@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.currentComposer
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -31,10 +30,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
         setContent {
-            Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background)
-            {
-                MobilniBusApp(auth, this)
-            }
+                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background)
+                {
+                    MobilniBusApp(auth, this)
+                }
         }
     }
 
@@ -44,10 +43,10 @@ class MainActivity : ComponentActivity() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             setContent {
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background)
-                {
-                    MobilniBusApp(auth, this)
-                }
+                    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background)
+                    {
+                        MobilniBusApp(auth, this)
+                    }
             }
         }
     }
