@@ -28,17 +28,17 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
-fun MapScreen(currentUser: FirebaseUser) {
+fun MapScreen(currentUser: FirebaseUser?) {
     val nis = LatLng(43.321445, 21.896104)
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(nis, 15f)
     }
-    var uiSettings by remember { mutableStateOf(MapUiSettings(
+    val uiSettings by remember { mutableStateOf(MapUiSettings(
         zoomControlsEnabled = false,
         tiltGesturesEnabled = false,
         compassEnabled = false,
         rotationGesturesEnabled = false)) }
-    var properties by remember {
+    val properties by remember {
         mutableStateOf(MapProperties(mapType = MapType.NORMAL))
     }
     Surface {
@@ -46,12 +46,12 @@ fun MapScreen(currentUser: FirebaseUser) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center) {
             GoogleMap(
-                modifier = Modifier.fillMaxWidth().fillMaxHeight(fraction = 0.9f),
+                modifier = Modifier.fillMaxWidth().fillMaxHeight(fraction = 0.8f),
                 cameraPositionState = cameraPositionState,
                 properties = properties,
                 uiSettings = uiSettings
             )
-            Row(modifier = Modifier.fillMaxWidth(),
+            Row(modifier = Modifier.fillMaxWidth().padding(0.dp,0.dp,0.dp,60.dp),
                 horizontalArrangement = Arrangement.Center){
                 ElevatedButton(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxHeight().padding(2.dp,0.dp))
                 {
@@ -72,5 +72,4 @@ fun MapScreen(currentUser: FirebaseUser) {
             }
         }
     }
-
 }
