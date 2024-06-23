@@ -1,6 +1,8 @@
 package com.example.mobilnibus
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -20,6 +22,7 @@ import com.example.mobilnibus.screens.StartScreen
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlin.system.exitProcess
 
 class MainActivity : ComponentActivity() {
 
@@ -51,6 +54,12 @@ class MainActivity : ComponentActivity() {
                     }
             }
         }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        this.finish()
+        exitProcess(0)
     }
 
 }
