@@ -19,7 +19,7 @@ fun SettingsScreen(auth: FirebaseAuth,navigateToStart:()->Unit) {
     Surface(color = Color.Black) {
         Surface(
             color = Color.White,
-            modifier = Modifier.padding(0.dp, 24.dp, 0.dp, 0.dp)
+            modifier = Modifier.padding(0.dp, 36.dp, 0.dp, 0.dp)
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),

@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun StartScreen(auth: FirebaseAuth,mainActivity: MainActivity, formViewModel: FormViewModel,navigateToMap:()->Unit) {
+
     fun createUserWithEmailAndPassword(
         auth: FirebaseAuth,
         mainActivity: MainActivity,
@@ -71,18 +72,13 @@ fun StartScreen(auth: FirebaseAuth,mainActivity: MainActivity, formViewModel: Fo
     }
 
     if (auth.currentUser != null) {
-        val builder = AlertDialog.Builder(mainActivity)
-        builder.setMessage("Prijava u toku...")
-        val info: AlertDialog = builder.create()
-        info.show()
         navigateToMap()
-        info.dismiss()
     }
 
     Surface(color = Color.Black) {
         Surface(
             color = Color.White,
-            modifier = Modifier.padding(0.dp, 24.dp, 0.dp, 0.dp)
+            modifier = Modifier.padding(0.dp, 36.dp, 0.dp, 0.dp)
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
