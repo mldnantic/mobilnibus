@@ -55,11 +55,10 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    @Deprecated("Deprecated in Java")
+    @Deprecated("Deprecated in Java", ReplaceWith("this.moveTaskToBack(true)"))
     @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
-        this.finish()
-        exitProcess(0)
+        this.moveTaskToBack(true)
     }
 
 }
