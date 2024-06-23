@@ -1,5 +1,6 @@
 package com.example.mobilnibus.screens
 
+import android.app.AlertDialog
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,14 +25,13 @@ import com.example.mobilnibus.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun StartScreen(auth: FirebaseAuth,mainActivity: MainActivity, formViewModel: FormViewModel,navigateToMap:()->Unit)
-{
+fun StartScreen(auth: FirebaseAuth,mainActivity: MainActivity, formViewModel: FormViewModel,navigateToMap:()->Unit) {
     fun createUserWithEmailAndPassword(
         auth: FirebaseAuth,
         mainActivity: MainActivity,
-        email:String,
-        password:String)
-    {
+        email: String,
+        password: String
+    ) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(mainActivity) { task ->
                 if (task.isSuccessful) {
@@ -52,8 +52,8 @@ fun StartScreen(auth: FirebaseAuth,mainActivity: MainActivity, formViewModel: Fo
         auth: FirebaseAuth,
         mainActivity: MainActivity,
         email: String,
-        password: String)
-    {
+        password: String
+    ) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(mainActivity) { task ->
                 if (task.isSuccessful) {
@@ -70,58 +70,85 @@ fun StartScreen(auth: FirebaseAuth,mainActivity: MainActivity, formViewModel: Fo
             }
     }
 
-    if(auth.currentUser!=null)
-    {
+    if (auth.currentUser != null) {
+        val builder = AlertDialog.Builder(mainActivity)
+        builder.setMessage("Prijava u toku...")
+        val info: AlertDialog = builder.create()
+        info.show()
         navigateToMap()
+        info.dismiss()
     }
 
-    Surface{
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        )
-        {
-            Text(text = "MobilniBus",
-                fontSize = 64.sp,
-                style = TextStyle(
-                    brush = Brush.linearGradient(colors=listOf(Color.Magenta, Color.Cyan),)),
-                fontFamily = FontFamily.Cursive)
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth().padding(24.dp,0.dp),
-                value = formViewModel.email,
-                onValueChange = { formViewModel.email = it },
-                label = { Text("Email") }
+    Surface(color = Color.Black) {
+        Surface(
+            color = Color.White,
+            modifier = Modifier.padding(0.dp, 24.dp, 0.dp, 0.dp)
+        ) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             )
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth().padding(24.dp,0.dp),
-                value = formViewModel.password,
-                onValueChange = { formViewModel.password = it },
-                label = { Text("Password") }
-            )
-            Row(modifier = Modifier.fillMaxWidth().padding(24.dp,0.dp)){
-                ElevatedButton(
-                    onClick = {createUserWithEmailAndPassword(auth,mainActivity,formViewModel.email,formViewModel.password)},
-                    modifier = Modifier.fillMaxWidth(0.5f)
+            {
+                Text(
+                    text = "MobilniBus",
+                    fontSize = 64.sp,
+                    style = TextStyle(
+                        brush = Brush.linearGradient(colors = listOf(Color.Magenta, Color.Cyan),)
+                    ),
+                    fontFamily = FontFamily.Cursive
                 )
-                {
-                    Text(text = "Register")
-                }
-                ElevatedButton(
-                    onClick = {signInWithEmailAndPassword(auth,mainActivity,formViewModel.email,formViewModel.password)},
-                    modifier = Modifier.fillMaxWidth()
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth().padding(24.dp, 0.dp),
+                    value = formViewModel.email,
+                    onValueChange = { formViewModel.email = it },
+                    label = { Text("Email") }
                 )
-                {
-                    Text(text = "Login")
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth().padding(24.dp, 0.dp),
+                    value = formViewModel.password,
+                    onValueChange = { formViewModel.password = it },
+                    label = { Text("Password") }
+                )
+                Row(modifier = Modifier.fillMaxWidth().padding(24.dp, 0.dp)) {
+                    ElevatedButton(
+                        onClick = {
+                            createUserWithEmailAndPassword(
+                                auth,
+                                mainActivity,
+                                formViewModel.email,
+                                formViewModel.password
+                            )
+                        },
+                        modifier = Modifier.fillMaxWidth(0.5f)
+                    )
+                    {
+                        Text(text = "Register")
+                    }
+                    ElevatedButton(
+                        onClick = {
+                            signInWithEmailAndPassword(
+                                auth,
+                                mainActivity,
+                                formViewModel.email,
+                                formViewModel.password
+                            )
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    {
+                        Text(text = "Login")
+                    }
                 }
+
+                Text(
+                    modifier = Modifier.padding(32.dp),
+                    text = "Da bi ste mogli da koristite aplikaciju potrebno je da se registrujete",
+                    fontSize = 10.sp,
+                    color = Color.DarkGray
+                )
+                Text(text = "©Mladen Antic 2024")
             }
-
-            Text(modifier = Modifier.padding(32.dp),
-                text = "Da bi ste mogli da koristite aplikaciju potrebno je da se registrujete",
-                fontSize = 10.sp,
-                color = Color.DarkGray)
-            Text(text = "©Mladen Antic 2024")
-
         }
     }
 }

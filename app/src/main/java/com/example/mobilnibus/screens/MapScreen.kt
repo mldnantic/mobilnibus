@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.android.gms.maps.model.CameraPosition
@@ -28,45 +29,72 @@ import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
 fun MapScreen(auth: FirebaseAuth, navigateToSettings: () -> Unit) {
+
     val nis = LatLng(43.321445, 21.896104)
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(nis, 15f)
     }
-    val uiSettings by remember { mutableStateOf(MapUiSettings(
-        zoomControlsEnabled = false,
-        tiltGesturesEnabled = false,
-        compassEnabled = false,
-        rotationGesturesEnabled = false)) }
+    val uiSettings by remember {
+        mutableStateOf(
+            MapUiSettings(
+                zoomControlsEnabled = false,
+                tiltGesturesEnabled = false,
+                compassEnabled = false,
+                rotationGesturesEnabled = false
+            )
+        )
+    }
     val properties by remember {
         mutableStateOf(MapProperties(mapType = MapType.NORMAL))
     }
-    Surface {
-        Column(modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center) {
-            GoogleMap(
-                modifier = Modifier.fillMaxWidth().fillMaxHeight(fraction = 0.8f),
-                cameraPositionState = cameraPositionState,
-                properties = properties,
-                uiSettings = uiSettings
-            )
-            Row(modifier = Modifier.fillMaxWidth().padding(0.dp,0.dp,0.dp,60.dp),
-                horizontalArrangement = Arrangement.Center){
-                ElevatedButton(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxHeight().padding(2.dp,0.dp))
-                {
-                    Text(text = "📌", fontSize = 32.sp)
-                }
-                ElevatedButton(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxHeight().padding(2.dp,0.dp))
-                {
-                    Text(text = "🚏", fontSize = 32.sp)
-                }
-                ElevatedButton(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxHeight().padding(2.dp,0.dp))
-                {
-                    Text(text = "🏅", fontSize = 32.sp)
-                }
-                ElevatedButton(onClick = { navigateToSettings() }, modifier = Modifier.fillMaxHeight().padding(2.dp,0.dp))
-                {
-                    Text(text = "⚙️", fontSize = 32.sp)
+    Surface(color = Color.Black) {
+        Surface(
+            color = Color.White,
+            modifier = Modifier.padding(0.dp, 24.dp, 0.dp, 0.dp)
+        ) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                GoogleMap(
+                    modifier = Modifier.fillMaxWidth().fillMaxHeight(fraction = 0.8f),
+                    cameraPositionState = cameraPositionState,
+                    properties = properties,
+                    uiSettings = uiSettings
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(0.dp, 0.dp, 0.dp, 60.dp),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    ElevatedButton(
+                        onClick = { /*TODO*/ },
+                        modifier = Modifier.fillMaxHeight().padding(2.dp, 0.dp)
+                    )
+                    {
+                        Text(text = "📌", fontSize = 32.sp)
+                    }
+                    ElevatedButton(
+                        onClick = { /*TODO*/ },
+                        modifier = Modifier.fillMaxHeight().padding(2.dp, 0.dp)
+                    )
+                    {
+                        Text(text = "🚏", fontSize = 32.sp)
+                    }
+                    ElevatedButton(
+                        onClick = { /*TODO*/ },
+                        modifier = Modifier.fillMaxHeight().padding(2.dp, 0.dp)
+                    )
+                    {
+                        Text(text = "🏅", fontSize = 32.sp)
+                    }
+                    ElevatedButton(
+                        onClick = { navigateToSettings() },
+                        modifier = Modifier.fillMaxHeight().padding(2.dp, 0.dp)
+                    )
+                    {
+                        Text(text = "⚙️", fontSize = 32.sp)
+                    }
                 }
             }
         }

@@ -30,7 +30,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
         setContent {
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background)
+                Surface(modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background)
                 {
                     MobilniBusApp(auth, this)
                 }
@@ -43,7 +44,8 @@ class MainActivity : ComponentActivity() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             setContent {
-                    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background)
+                    Surface(modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background)
                     {
                         MobilniBusApp(auth, this)
                     }
@@ -75,7 +77,11 @@ fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity) {
 
         composable(Screens.SettingsScreen.name)
         {
-            SettingsScreen(auth, navigateToStart = {navController.popBackStack(Screens.StartScreen.name,inclusive = false)})
+            SettingsScreen(auth,
+                navigateToStart = {
+                    navController.popBackStack(Screens.StartScreen.name,inclusive = false)
+                }
+            )
         }
     }
 }
