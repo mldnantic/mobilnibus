@@ -2,6 +2,7 @@ package com.example.mobilnibus.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ElevatedButton
@@ -15,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun SettingsScreen(auth: FirebaseAuth,navigateToStart:()->Unit,stopSvc:()->Unit) {
+fun SettingsScreen(auth: FirebaseAuth,navigateToStart:()->Unit,startSvc:()->Unit,stopSvc:()->Unit) {
     Surface(color = Color.Black) {
         Surface(
             color = Color.White,
@@ -26,6 +27,20 @@ fun SettingsScreen(auth: FirebaseAuth,navigateToStart:()->Unit,stopSvc:()->Unit)
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
+                Row{
+                    ElevatedButton(onClick = {
+                        startSvc()
+                    })
+                    {
+                        Text("Track location")
+                    }
+                    ElevatedButton(onClick = {
+                        stopSvc()
+                    })
+                    {
+                        Text("Stop tracking")
+                    }
+                }
                 ElevatedButton(onClick = {
                     stopSvc()
                     if (auth.currentUser != null) {
