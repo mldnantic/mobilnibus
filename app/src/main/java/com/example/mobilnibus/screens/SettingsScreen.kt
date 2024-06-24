@@ -16,11 +16,11 @@ import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun SettingsScreen(auth: FirebaseAuth,navigateToStart:()->Unit,startSvc:()->Unit,stopSvc:()->Unit) {
+fun SettingsScreen(auth: FirebaseAuth,navigateToStart:()->Unit,navigateBack:()->Unit,startSvc:()->Unit,stopSvc:()->Unit) {
     Surface(color = Color.Black) {
         Surface(
             color = Color.White,
-            modifier = Modifier.padding(0.dp, 36.dp, 0.dp, 0.dp)
+            modifier = Modifier.padding(0.dp, 72.dp, 0.dp, 72.dp)
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -50,6 +50,12 @@ fun SettingsScreen(auth: FirebaseAuth,navigateToStart:()->Unit,startSvc:()->Unit
                 })
                 {
                     Text("Log out")
+                }
+                ElevatedButton(onClick = {
+                    navigateBack()
+                })
+                {
+                    Text("◀️")
                 }
             }
         }

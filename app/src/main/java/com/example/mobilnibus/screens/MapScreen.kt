@@ -50,7 +50,7 @@ fun MapScreen(auth: FirebaseAuth, navigateToSettings: () -> Unit) {
     Surface(color = Color.Black) {
         Surface(
             color = Color.White,
-            modifier = Modifier.padding(0.dp, 36.dp, 0.dp, 0.dp)
+            modifier = Modifier.padding(0.dp, 72.dp, 0.dp, 72.dp)
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -58,13 +58,13 @@ fun MapScreen(auth: FirebaseAuth, navigateToSettings: () -> Unit) {
                 verticalArrangement = Arrangement.Center
             ) {
                 GoogleMap(
-                    modifier = Modifier.fillMaxWidth().fillMaxHeight(fraction = 0.8f),
+                    modifier = Modifier.fillMaxWidth().fillMaxHeight(fraction = 0.85f),
                     cameraPositionState = cameraPositionState,
                     properties = properties,
                     uiSettings = uiSettings
                 )
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(0.dp, 0.dp, 0.dp, 60.dp),
+                    modifier = Modifier.fillMaxWidth().padding(0.dp, 0.dp, 0.dp, 0.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
                     ElevatedButton(

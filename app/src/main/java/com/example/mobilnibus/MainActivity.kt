@@ -131,6 +131,9 @@ fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity,svcStart:()->Un
                 navigateToStart = {
                     navController.popBackStack(Screens.StartScreen.name,inclusive = false)
                 },
+                navigateBack = {
+                    navController.popBackStack()
+                },
                 startSvc = {svcStart()},
                 stopSvc = {svcStop()})
         }
