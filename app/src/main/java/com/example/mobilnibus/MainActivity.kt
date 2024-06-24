@@ -1,6 +1,11 @@
 package com.example.mobilnibus
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,13 +20,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilnibus.screens.FormViewModel
+import com.example.mobilnibus.screens.LocationService
 import com.example.mobilnibus.screens.MapScreen
 import com.example.mobilnibus.screens.SettingsScreen
 import com.example.mobilnibus.screens.StartScreen
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlin.system.exitProcess
 
 class MainActivity : ComponentActivity() {
 
@@ -30,12 +35,33 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+
+        this.requestPermissions(
+            arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ),
+            0
+        )
+
         auth = Firebase.auth
         setContent {
                 Surface(modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background)
                 {
-                    MobilniBusApp(auth, this)
+                    MobilniBusApp(auth, this,
+                        svcStart = {
+                            Intent(this, LocationService::class.java).apply {
+                                action = LocationService.ACTION_START
+                                startService(this)
+                            }
+                        },
+                        svcStop = {
+                            Intent(this, LocationService::class.java).apply {
+                                action = LocationService.ACTION_STOP
+                                startService(this)
+                            }
+                        })
                 }
         }
     }
@@ -49,7 +75,19 @@ class MainActivity : ComponentActivity() {
                     Surface(modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background)
                     {
-                        MobilniBusApp(auth, this)
+                        MobilniBusApp(auth, this,
+                            svcStart = {
+                                Intent(this, LocationService::class.java).apply {
+                                    action = LocationService.ACTION_START
+                                    startService(this)
+                                }
+                            },
+                            svcStop = {
+                                Intent(this, LocationService::class.java).apply {
+                                    action = LocationService.ACTION_STOP
+                                    startService(this)
+                                }
+                            })
                     }
             }
         }
@@ -61,10 +99,12 @@ class MainActivity : ComponentActivity() {
         this.moveTaskToBack(true)
     }
 
+
+
 }
 
 @Composable
-fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity) {
+fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity,svcStart:()->Unit,svcStop:()->Unit) {
     val navController = rememberNavController()
     val formViewModel: FormViewModel = viewModel()
 
@@ -73,6 +113,7 @@ fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity) {
         composable(Screens.StartScreen.name)
         {
             StartScreen(auth,mainActivity,formViewModel,
+                startSvc = {svcStart()},
                 navigateToMap = {navController.navigate(Screens.MapScreen.name)}
             )
         }
@@ -88,8 +129,8 @@ fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity) {
             SettingsScreen(auth,
                 navigateToStart = {
                     navController.popBackStack(Screens.StartScreen.name,inclusive = false)
-                }
-            )
+                },
+                stopSvc = {svcStop()})
         }
     }
 }

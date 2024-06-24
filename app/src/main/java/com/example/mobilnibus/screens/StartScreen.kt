@@ -1,6 +1,5 @@
 package com.example.mobilnibus.screens
 
-import android.app.AlertDialog
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -25,7 +23,7 @@ import com.example.mobilnibus.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun StartScreen(auth: FirebaseAuth,mainActivity: MainActivity, formViewModel: FormViewModel,navigateToMap:()->Unit) {
+fun StartScreen(auth: FirebaseAuth,mainActivity: MainActivity, formViewModel: FormViewModel,startSvc:()->Unit,navigateToMap:()->Unit) {
 
     fun createUserWithEmailAndPassword(
         auth: FirebaseAuth,
@@ -123,6 +121,7 @@ fun StartScreen(auth: FirebaseAuth,mainActivity: MainActivity, formViewModel: Fo
                     }
                     ElevatedButton(
                         onClick = {
+                            startSvc()
                             signInWithEmailAndPassword(
                                 auth,
                                 mainActivity,

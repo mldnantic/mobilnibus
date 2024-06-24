@@ -68,7 +68,9 @@ fun MapScreen(auth: FirebaseAuth, navigateToSettings: () -> Unit) {
                     horizontalArrangement = Arrangement.Center
                 ) {
                     ElevatedButton(
-                        onClick = { /*TODO*/ },
+                        onClick = {
+
+                                  },
                         modifier = Modifier.fillMaxHeight().padding(2.dp, 0.dp)
                     )
                     {

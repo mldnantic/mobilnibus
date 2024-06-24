@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun SettingsScreen(auth: FirebaseAuth,navigateToStart:()->Unit) {
+fun SettingsScreen(auth: FirebaseAuth,navigateToStart:()->Unit,stopSvc:()->Unit) {
     Surface(color = Color.Black) {
         Surface(
             color = Color.White,
@@ -27,6 +27,7 @@ fun SettingsScreen(auth: FirebaseAuth,navigateToStart:()->Unit) {
                 verticalArrangement = Arrangement.Center
             ) {
                 ElevatedButton(onClick = {
+                    stopSvc()
                     if (auth.currentUser != null) {
                         auth.signOut()
                         navigateToStart()
