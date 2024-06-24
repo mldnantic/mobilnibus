@@ -2,9 +2,6 @@ package com.example.mobilnibus
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -31,8 +28,24 @@ import com.google.firebase.ktx.Firebase
 class MainActivity : ComponentActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private fun startLocService()
+    {
+        Intent(this, LocationService::class.java).apply {
+            action = LocationService.ACTION_START
+            startService(this)
+        }
+    }
+
+    private fun stopLocService()
+    {
+        Intent(this, LocationService::class.java).apply {
+            action = LocationService.ACTION_STOP
+            startService(this)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
@@ -45,22 +58,17 @@ class MainActivity : ComponentActivity() {
         )
 
         auth = Firebase.auth
+
         setContent {
                 Surface(modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background)
                 {
                     MobilniBusApp(auth, this,
                         svcStart = {
-                            Intent(this, LocationService::class.java).apply {
-                                action = LocationService.ACTION_START
-                                startService(this)
-                            }
+                            startLocService()
                         },
                         svcStop = {
-                            Intent(this, LocationService::class.java).apply {
-                                action = LocationService.ACTION_STOP
-                                startService(this)
-                            }
+                            stopLocService()
                         })
                 }
         }
@@ -77,16 +85,11 @@ class MainActivity : ComponentActivity() {
                     {
                         MobilniBusApp(auth, this,
                             svcStart = {
-                                Intent(this, LocationService::class.java).apply {
-                                    action = LocationService.ACTION_START
-                                    startService(this)
-                                }
+                                startLocService()
+
                             },
                             svcStop = {
-                                Intent(this, LocationService::class.java).apply {
-                                    action = LocationService.ACTION_STOP
-                                    startService(this)
-                                }
+                                stopLocService()
                             })
                     }
             }
@@ -98,8 +101,6 @@ class MainActivity : ComponentActivity() {
     override fun onBackPressed() {
         this.moveTaskToBack(true)
     }
-
-
 
 }
 

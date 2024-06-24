@@ -70,6 +70,7 @@ fun StartScreen(auth: FirebaseAuth,mainActivity: MainActivity, formViewModel: Fo
     }
 
     if (auth.currentUser != null) {
+        startSvc()
         navigateToMap()
     }
 
