@@ -28,6 +28,9 @@ import com.google.firebase.ktx.Firebase
 class MainActivity : ComponentActivity() {
 
     private lateinit var auth: FirebaseAuth
+
+
+
     private fun startLocService()
     {
         Intent(this, LocationService::class.java).apply {
@@ -106,7 +109,6 @@ class MainActivity : ComponentActivity() {
     override fun onBackPressed() {
         this.moveTaskToBack(true)
     }
-
 }
 
 @Composable
