@@ -1,4 +1,4 @@
-package com.example.mobilnibus.screens
+package com.example.mobilnibus.location
 
 import android.app.NotificationManager
 import android.app.Service

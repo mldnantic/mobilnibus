@@ -17,7 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilnibus.screens.FormViewModel
-import com.example.mobilnibus.screens.LocationService
+import com.example.mobilnibus.location.LocationService
 import com.example.mobilnibus.screens.MapScreen
 import com.example.mobilnibus.screens.SettingsScreen
 import com.example.mobilnibus.screens.StartScreen
@@ -94,6 +94,11 @@ class MainActivity : ComponentActivity() {
                     }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopLocService()
     }
 
     @Deprecated("Deprecated in Java", ReplaceWith("this.moveTaskToBack(true)"))
