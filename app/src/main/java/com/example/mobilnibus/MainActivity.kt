@@ -22,7 +22,10 @@ import com.example.mobilnibus.location.LocationService
 import com.example.mobilnibus.screens.MapScreen
 import com.example.mobilnibus.screens.SettingsScreen
 import com.example.mobilnibus.screens.StartScreen
+import com.example.mobilnibus.storage.BusStopStorageService
 import com.example.mobilnibus.storage.UserStorageService
+import com.example.mobilnibus.viemodels.BusStopViewModel
+import com.example.mobilnibus.viemodels.BusStopViewModelFactory
 import com.example.mobilnibus.viemodels.UserViewModel
 import com.example.mobilnibus.viemodels.UserViewModelFactory
 import com.google.firebase.auth.FirebaseAuth
@@ -33,8 +36,12 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var auth: FirebaseAuth
 
-    private val poiViewModel: UserViewModel by viewModels {
+    private val userViewModel: UserViewModel by viewModels {
         UserViewModelFactory(UserStorageService((application as UserApp).db))
+    }
+
+    private val busStopViewModel: BusStopViewModel by viewModels {
+        BusStopViewModelFactory(BusStopStorageService((application as BusStopApp).db))
     }
 
     private fun startLocService()

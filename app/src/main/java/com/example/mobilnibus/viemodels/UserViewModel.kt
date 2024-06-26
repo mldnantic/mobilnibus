@@ -33,8 +33,9 @@ class UserViewModel(private val storageService: UserStorageService):ViewModel(){
         viewModelScope.launch{
             storageService.save(u)
         }
-
     }
+
+    //TODO Other CRUD methods for users
 
 }
 

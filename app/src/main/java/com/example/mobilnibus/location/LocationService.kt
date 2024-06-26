@@ -22,6 +22,7 @@ class LocationService: Service() {
     private val serviceScope = CoroutineScope(SupervisorJob()+ Dispatchers.IO)
     private lateinit var locationClient: LocationClient
 
+
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
@@ -59,7 +60,9 @@ class LocationService: Service() {
             }
             .onEach { location ->
                 val lat = location.latitude.toString()
+                latitude = location.latitude
                 val lng = location.longitude.toString()
+                longitude = location.longitude
                 val updatedNotification = notification.setContentText(
                     "Location: ($lat,$lng)"
                 )
@@ -83,6 +86,8 @@ class LocationService: Service() {
     companion object {
         const val ACTION_START = "ACTION_START"
         const val ACTION_STOP = "ACTION_STOP"
+        var latitude:Double=0.0
+        var longitude:Double=0.0
     }
 
 }

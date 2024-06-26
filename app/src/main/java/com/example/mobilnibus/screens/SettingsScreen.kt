@@ -27,6 +27,10 @@ fun SettingsScreen(auth: FirebaseAuth,navigateToStart:()->Unit,navigateBack:()->
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
+
+                auth.currentUser?.displayName?.let { Text(text = it) }
+                auth.currentUser?.uid?.let { Text(text = it) }
+
                 Row{
                     ElevatedButton(onClick = {
                         startSvc()
@@ -41,6 +45,7 @@ fun SettingsScreen(auth: FirebaseAuth,navigateToStart:()->Unit,navigateBack:()->
                         Text("Stop tracking")
                     }
                 }
+
                 ElevatedButton(onClick = {
                     stopSvc()
                     if (auth.currentUser != null) {
@@ -51,12 +56,14 @@ fun SettingsScreen(auth: FirebaseAuth,navigateToStart:()->Unit,navigateBack:()->
                 {
                     Text("Log out")
                 }
+
                 ElevatedButton(onClick = {
                     navigateBack()
                 })
                 {
                     Text("◀️")
                 }
+
             }
         }
     }

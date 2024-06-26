@@ -1,4 +1,4 @@
-package com.example.mobilnibus.screens
+package com.example.mobilnibus.location
 
 import android.Manifest
 import android.content.Context

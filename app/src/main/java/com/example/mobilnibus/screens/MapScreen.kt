@@ -2,6 +2,7 @@ package com.example.mobilnibus.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mobilnibus.location.LocationService
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
@@ -40,13 +42,15 @@ fun MapScreen(auth: FirebaseAuth, navigateToSettings: () -> Unit) {
                 zoomControlsEnabled = false,
                 tiltGesturesEnabled = false,
                 compassEnabled = false,
-                rotationGesturesEnabled = false
+                rotationGesturesEnabled = false,
+                myLocationButtonEnabled = false
             )
         )
     }
     val properties by remember {
-        mutableStateOf(MapProperties(mapType = MapType.NORMAL))
+        mutableStateOf(MapProperties(mapType = MapType.NORMAL, isMyLocationEnabled = true))
     }
+
     Surface(color = Color.Black) {
         Surface(
             color = Color.White,
@@ -61,7 +65,8 @@ fun MapScreen(auth: FirebaseAuth, navigateToSettings: () -> Unit) {
                     modifier = Modifier.fillMaxWidth().fillMaxHeight(fraction = 0.85f),
                     cameraPositionState = cameraPositionState,
                     properties = properties,
-                    uiSettings = uiSettings
+                    uiSettings = uiSettings,
+                    contentPadding = PaddingValues(8.dp)
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(0.dp, 0.dp, 0.dp, 0.dp),
@@ -69,7 +74,7 @@ fun MapScreen(auth: FirebaseAuth, navigateToSettings: () -> Unit) {
                 ) {
                     ElevatedButton(
                         onClick = {
-
+                                  cameraPositionState.position = CameraPosition.fromLatLngZoom(LatLng(LocationService.latitude,LocationService.longitude),15f)
                                   },
                         modifier = Modifier.fillMaxHeight().padding(2.dp, 0.dp)
                     )
