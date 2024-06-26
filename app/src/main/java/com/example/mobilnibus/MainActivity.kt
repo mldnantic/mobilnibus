@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -16,11 +17,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.mobilnibus.screens.FormViewModel
+import com.example.mobilnibus.viemodels.FormViewModel
 import com.example.mobilnibus.location.LocationService
 import com.example.mobilnibus.screens.MapScreen
 import com.example.mobilnibus.screens.SettingsScreen
 import com.example.mobilnibus.screens.StartScreen
+import com.example.mobilnibus.storage.UserStorageService
+import com.example.mobilnibus.viemodels.UserViewModel
+import com.example.mobilnibus.viemodels.UserViewModelFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -29,7 +33,9 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var auth: FirebaseAuth
 
-
+    private val poiViewModel: UserViewModel by viewModels {
+        UserViewModelFactory(UserStorageService((application as UserApp).db))
+    }
 
     private fun startLocService()
     {

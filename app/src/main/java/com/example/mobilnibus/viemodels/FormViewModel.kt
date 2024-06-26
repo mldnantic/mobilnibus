@@ -1,4 +1,4 @@
-package com.example.mobilnibus.screens
+package com.example.mobilnibus.viemodels
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 
 class FormViewModel: ViewModel() {
     var email: String by mutableStateOf("")
+    var username: String by mutableStateOf("")
     var password: String by mutableStateOf("")
     var ime: String by mutableStateOf("")
     var prezime: String by mutableStateOf("")
@@ -14,6 +15,7 @@ class FormViewModel: ViewModel() {
     fun reset()
     {
         email=""
+        username=""
         password=""
         ime=""
         prezime=""

@@ -4,7 +4,7 @@ import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.ServerTimestamp
 import java.util.Date
 
-data class BusStop(
+data class BusStopModel(
     @DocumentId val id: String = "",
     @ServerTimestamp val createdAt: Date = Date(),
     val name: String = "",

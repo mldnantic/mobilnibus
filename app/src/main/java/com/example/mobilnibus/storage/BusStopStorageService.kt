@@ -1,6 +1,6 @@
 package com.example.mobilnibus.storage
 
-import com.example.mobilnibus.model.BusStop
+import com.example.mobilnibus.model.BusStopModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.dataObjects
@@ -10,23 +10,23 @@ import kotlinx.coroutines.tasks.await
 
 class BusStopStorageService(private val firestore: FirebaseFirestore){
 
-    val busStops: Flow<List<BusStop>>
+    val busStopsModel: Flow<List<BusStopModel>>
         get() =
             firestore
                 .collection(BUSSTOP_COLLECTION)
                 .orderBy(CREATED_AT_FIELD, Query.Direction.DESCENDING)
                 .dataObjects()
 
-    suspend fun getPoi(busStopId: String): BusStop? =
+    suspend fun getPoi(busStopId: String): BusStopModel? =
         firestore.collection(BUSSTOP_COLLECTION).document(busStopId).get().await().toObject()
 
-    suspend fun save(busStop: BusStop): String {
-        val updatedBusStop = busStop.copy()
+    suspend fun save(busStopModel: BusStopModel): String {
+        val updatedBusStop = busStopModel.copy()
         return firestore.collection(BUSSTOP_COLLECTION).add(updatedBusStop).await().id
     }
 
-    suspend fun update(busStop: BusStop): Void? =
-        firestore.collection(BUSSTOP_COLLECTION).document(busStop.id).set(busStop).await()
+    suspend fun update(busStopModel: BusStopModel): Void? =
+        firestore.collection(BUSSTOP_COLLECTION).document(busStopModel.id).set(busStopModel).await()
 
     suspend fun delete(busStopId: String) {
         firestore.collection(BUSSTOP_COLLECTION).document(busStopId).delete().await()

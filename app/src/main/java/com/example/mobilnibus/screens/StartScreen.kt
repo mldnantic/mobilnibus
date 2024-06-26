@@ -20,10 +20,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobilnibus.MainActivity
+import com.example.mobilnibus.viemodels.FormViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun StartScreen(auth: FirebaseAuth,mainActivity: MainActivity, formViewModel: FormViewModel,startSvc:()->Unit,navigateToMap:()->Unit) {
+fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: FormViewModel, startSvc:()->Unit, navigateToMap:()->Unit) {
 
     fun createUserWithEmailAndPassword(
         auth: FirebaseAuth,
