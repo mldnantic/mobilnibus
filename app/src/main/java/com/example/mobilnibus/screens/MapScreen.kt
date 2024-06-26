@@ -20,8 +20,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobilnibus.location.LocationService
+import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.firebase.auth.FirebaseAuth
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
@@ -43,7 +45,7 @@ fun MapScreen(auth: FirebaseAuth, navigateToSettings: () -> Unit) {
                 tiltGesturesEnabled = false,
                 compassEnabled = false,
                 rotationGesturesEnabled = false,
-                myLocationButtonEnabled = false
+                myLocationButtonEnabled = false,
             )
         )
     }
@@ -66,7 +68,10 @@ fun MapScreen(auth: FirebaseAuth, navigateToSettings: () -> Unit) {
                     cameraPositionState = cameraPositionState,
                     properties = properties,
                     uiSettings = uiSettings,
-                    contentPadding = PaddingValues(8.dp)
+                    contentPadding = PaddingValues(8.dp),
+                    googleMapOptionsFactory = {
+                        GoogleMapOptions().latLngBoundsForCameraTarget(LatLngBounds(LatLng(43.2923021,21.8534963),LatLng(43.3624341,21.9818614)))
+                    }
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(0.dp, 0.dp, 0.dp, 0.dp),

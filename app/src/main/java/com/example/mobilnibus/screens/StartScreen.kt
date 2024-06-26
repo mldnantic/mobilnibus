@@ -1,5 +1,7 @@
 package com.example.mobilnibus.screens
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.example.mobilnibus.MainActivity
 import com.example.mobilnibus.viemodels.FormViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.userProfileChangeRequest
 
 @Composable
 fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: FormViewModel, startSvc:()->Unit, navigateToMap:()->Unit) {
@@ -30,12 +33,28 @@ fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: F
         auth: FirebaseAuth,
         mainActivity: MainActivity,
         email: String,
-        password: String
+        password: String,
+        username: String,
+        ime: String,
+        prezime: String,
+        telefon: String
     ) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(mainActivity) { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
+
+                    val profileUpdates = userProfileChangeRequest {
+                        displayName = username
+                    }
+
+                    user!!.updateProfile(profileUpdates)
+                        .addOnCompleteListener { taskic ->
+                            if (taskic.isSuccessful) {
+                                Log.d(TAG, "User profile updated.")
+                            }
+                        }
+
                     formViewModel.reset()
                     navigateToMap()
                 } else {
@@ -101,9 +120,33 @@ fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: F
                 )
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth().padding(24.dp, 0.dp),
+                    value = formViewModel.username,
+                    onValueChange = { formViewModel.username = it },
+                    label = { Text("Username") }
+                )
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth().padding(24.dp, 0.dp),
                     value = formViewModel.password,
                     onValueChange = { formViewModel.password = it },
                     label = { Text("Password") }
+                )
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth().padding(24.dp, 0.dp),
+                    value = formViewModel.ime,
+                    onValueChange = { formViewModel.ime = it },
+                    label = { Text("Ime") }
+                )
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth().padding(24.dp, 0.dp),
+                    value = formViewModel.prezime,
+                    onValueChange = { formViewModel.prezime = it },
+                    label = { Text("Prezime") }
+                )
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth().padding(24.dp, 0.dp),
+                    value = formViewModel.telefon,
+                    onValueChange = { formViewModel.telefon = it },
+                    label = { Text("Telefon") }
                 )
                 Row(modifier = Modifier.fillMaxWidth().padding(24.dp, 0.dp)) {
                     ElevatedButton(
@@ -112,7 +155,11 @@ fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: F
                                 auth,
                                 mainActivity,
                                 formViewModel.email,
-                                formViewModel.password
+                                formViewModel.password,
+                                formViewModel.username,
+                                formViewModel.ime,
+                                formViewModel.prezime,
+                                formViewModel.telefon
                             )
                         },
                         modifier = Modifier.fillMaxWidth(0.5f)
