@@ -68,10 +68,7 @@ fun MapScreen(auth: FirebaseAuth, navigateToSettings: () -> Unit) {
                     cameraPositionState = cameraPositionState,
                     properties = properties,
                     uiSettings = uiSettings,
-                    contentPadding = PaddingValues(8.dp),
-                    googleMapOptionsFactory = {
-                        GoogleMapOptions().latLngBoundsForCameraTarget(LatLngBounds(LatLng(43.2923021,21.8534963),LatLng(43.3624341,21.9818614)))
-                    }
+                    contentPadding = PaddingValues(8.dp)
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(0.dp, 0.dp, 0.dp, 0.dp),

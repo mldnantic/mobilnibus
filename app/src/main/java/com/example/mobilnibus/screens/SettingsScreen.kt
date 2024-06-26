@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.RangeSlider
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,63 +29,88 @@ fun SettingsScreen(auth: FirebaseAuth,navigateToStart:()->Unit,navigateBack:()->
     Surface(color = Color.Black) {
         Surface(
             color = Color.White,
-            modifier = Modifier.padding(0.dp, 72.dp, 0.dp, 72.dp)
-        ) {
+            modifier = Modifier.padding(0.dp, 72.dp, 0.dp, 72.dp))
+        {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
-                    verticalAlignment = Alignment.CenterVertically){
+                verticalArrangement = Arrangement.SpaceBetween)
+            {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically)
+                {
                     ElevatedButton(
-//                        modifier = Modifier.height(72.dp).width(72.dp),
+                        modifier = Modifier
+                            .height(72.dp)
+                            .width(72.dp),
                         onClick = {})
                     {
                         Text(text="🆔")
                     }
                     Column {
                         auth.currentUser?.displayName?.let{
-                            Text(text = it, fontSize=24.sp, modifier = Modifier.align(Alignment.CenterHorizontally))
+                            Text(text = it, fontSize=24.sp, modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                                .padding(8.dp))
                         }
                     }
                     Column(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.End
-                    ) {
+                        horizontalAlignment = Alignment.End)
+                    {
                         ElevatedButton(
-                            onClick = {
-                            stopSvc()
-                            if (auth.currentUser != null) {
-                                auth.signOut()
-                                navigateToStart()
+                            onClick =
+                            {
+                                stopSvc()
+                                if (auth.currentUser != null) {
+                                    auth.signOut()
+                                    navigateToStart()
+                                }
                             }
-                        })
+                        )
                         {
                             Text("Log out")
                         }
                     }
                 }
-
-                Row{
-                    ElevatedButton(onClick = {
-                        startSvc()
-                    })
+                Column(verticalArrangement = Arrangement.Top)
+                {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceAround)
                     {
-                        Text("Track location")
+                        ElevatedButton(onClick = {
+                            startSvc()
+                        })
+                        {
+                            Text("Track location")
+                        }
+                        ElevatedButton(onClick = {
+                            stopSvc()
+                        })
+                        {
+                            Text("Stop tracking")
+                        }
                     }
-                    ElevatedButton(onClick = {
-                        stopSvc()
-                    })
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(8.dp),
+                        horizontalArrangement = Arrangement.SpaceAround)
                     {
-                        Text("Stop tracking")
+                        Slider(value = 0f, onValueChange = {},steps = 2, valueRange = 0f..500f)
                     }
                 }
-                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
-                    horizontalArrangement = Arrangement.Start)
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                    horizontalArrangement = Arrangement.End)
                 {
                     ElevatedButton(
-                        modifier = Modifier.height(72.dp).width(72.dp),
+                        modifier = Modifier
+                            .height(72.dp)
+                            .width(72.dp),
                         onClick = {
                             navigateBack()
                         })
