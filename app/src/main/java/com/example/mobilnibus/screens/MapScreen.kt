@@ -75,6 +75,13 @@ fun MapScreen(auth: FirebaseAuth, navigateToSettings: () -> Unit) {
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     ElevatedButton(
+                        onClick = { navigateToSettings() },
+                        modifier = Modifier.fillMaxHeight().padding(2.dp, 0.dp)
+                    )
+                    {
+                        Text(text = "⚙️", fontSize = 32.sp)
+                    }
+                    ElevatedButton(
                         onClick = {
                                   cameraPositionState.position = CameraPosition.fromLatLngZoom(LatLng(LocationService.latitude,LocationService.longitude),15f)
                                   },
@@ -96,13 +103,6 @@ fun MapScreen(auth: FirebaseAuth, navigateToSettings: () -> Unit) {
                     )
                     {
                         Text(text = "🏅", fontSize = 32.sp)
-                    }
-                    ElevatedButton(
-                        onClick = { navigateToSettings() },
-                        modifier = Modifier.fillMaxHeight().padding(2.dp, 0.dp)
-                    )
-                    {
-                        Text(text = "⚙️", fontSize = 32.sp)
                     }
                 }
             }
