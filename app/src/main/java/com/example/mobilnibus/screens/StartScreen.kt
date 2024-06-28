@@ -23,11 +23,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobilnibus.MainActivity
 import com.example.mobilnibus.viemodels.FormViewModel
+import com.example.mobilnibus.viemodels.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.userProfileChangeRequest
 
 @Composable
-fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: FormViewModel, startSvc:()->Unit, navigateToMap:()->Unit) {
+fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: FormViewModel,
+                userViewModel: UserViewModel, startSvc:()->Unit, navigateToMap:()->Unit) {
 
     fun createUserWithEmailAndPassword(
         auth: FirebaseAuth,
@@ -54,7 +56,8 @@ fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: F
                                 Log.d(TAG, "User profile updated.")
                             }
                         }
-
+                    userViewModel.addUser(user.uid,formViewModel.username,
+                        formViewModel.ime,formViewModel.prezime,formViewModel.telefon)
                     formViewModel.reset()
                     navigateToMap()
                 } else {

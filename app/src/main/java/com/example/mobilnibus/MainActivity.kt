@@ -19,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilnibus.viemodels.FormViewModel
 import com.example.mobilnibus.location.LocationService
+import com.example.mobilnibus.location.MobilniBusApp
 import com.example.mobilnibus.screens.MapScreen
 import com.example.mobilnibus.screens.SettingsScreen
 import com.example.mobilnibus.screens.StartScreen
@@ -37,7 +38,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var auth: FirebaseAuth
 
     private val userViewModel: UserViewModel by viewModels {
-        UserViewModelFactory(UserStorageService((application as UserApp).db))
+        UserViewModelFactory(UserStorageService((application as MobilniBusApp).db))
     }
 
     private val busStopViewModel: BusStopViewModel by viewModels {
@@ -79,7 +80,7 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background)
                 {
-                    MobilniBusApp(auth, this,
+                    MobilniBusApp(auth, this,userViewModel,
                         svcStart = {
                             startLocService()
                         },
@@ -99,7 +100,7 @@ class MainActivity : ComponentActivity() {
                     Surface(modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background)
                     {
-                        MobilniBusApp(auth, this,
+                        MobilniBusApp(auth, this,userViewModel,
                             svcStart = {
                                 startLocService()
 
@@ -125,7 +126,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity,svcStart:()->Unit,svcStop:()->Unit) {
+fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity,userViewModel: UserViewModel, svcStart:()->Unit,svcStop:()->Unit) {
     val navController = rememberNavController()
     val formViewModel: FormViewModel = viewModel()
 
@@ -133,7 +134,7 @@ fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity,svcStart:()->Un
 
         composable(Screens.StartScreen.name)
         {
-            StartScreen(auth,mainActivity,formViewModel,
+            StartScreen(auth,mainActivity,formViewModel,userViewModel,
                 startSvc = {svcStart()},
                 navigateToMap = {navController.navigate(Screens.MapScreen.name)}
             )
@@ -148,6 +149,7 @@ fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity,svcStart:()->Un
         composable(Screens.SettingsScreen.name)
         {
             SettingsScreen(auth,
+                userViewModel,
                 navigateToStart = {
                     navController.popBackStack(Screens.StartScreen.name,inclusive = false)
                 },

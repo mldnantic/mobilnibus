@@ -18,7 +18,7 @@ class UserStorageService(private val firestore: FirebaseFirestore){
                 .orderBy(CREATED_AT_FIELD, Query.Direction.DESCENDING)
                 .dataObjects()
 
-    suspend fun getPoi(userId: String): BusStopModel? =
+    suspend fun getUserUID(userId: String): BusStopModel? =
         firestore.collection(USER_COLLECTION).document(userId).get().await().toObject()
 
     suspend fun save(userModel: UserModel): String {

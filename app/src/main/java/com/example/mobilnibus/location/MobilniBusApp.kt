@@ -4,8 +4,12 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
-class LocationApp: Application() {
+class MobilniBusApp: Application() {
+
+    val db by lazy { Firebase.firestore }
 
     override fun onCreate() {
         super.onCreate()

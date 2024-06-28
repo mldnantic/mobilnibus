@@ -22,10 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mobilnibus.viemodels.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun SettingsScreen(auth: FirebaseAuth,navigateToStart:()->Unit,navigateBack:()->Unit,startSvc:()->Unit,stopSvc:()->Unit) {
+fun SettingsScreen(auth: FirebaseAuth,
+                   userViewModel: UserViewModel,
+                   navigateToStart:()->Unit,navigateBack:()->Unit,startSvc:()->Unit,stopSvc:()->Unit) {
     Surface(color = Color.Black) {
         Surface(
             color = Color.White,
@@ -58,6 +61,7 @@ fun SettingsScreen(auth: FirebaseAuth,navigateToStart:()->Unit,navigateBack:()->
                                     .align(Alignment.CenterHorizontally)
                                     .padding(8.dp))
                             }
+
                         }
                         Column(
                             modifier = Modifier.fillMaxWidth(),
