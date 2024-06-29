@@ -1,6 +1,5 @@
 package com.example.mobilnibus.storage
 
-import com.example.mobilnibus.model.BusStopModel
 import com.example.mobilnibus.model.UserModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -18,7 +17,7 @@ class UserStorageService(private val firestore: FirebaseFirestore){
                 .orderBy(CREATED_AT_FIELD, Query.Direction.DESCENDING)
                 .dataObjects()
 
-    suspend fun getUserUID(userId: String): UserModel? =
+    suspend fun getUserByUID(userId: String): UserModel? =
         firestore.collection(USER_COLLECTION).document(userId).get().await().toObject()
 
     suspend fun save(userModel: UserModel): String {

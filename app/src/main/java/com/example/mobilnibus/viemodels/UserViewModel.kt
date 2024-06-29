@@ -36,7 +36,12 @@ class UserViewModel(private val storageService: UserStorageService):ViewModel(){
     }
 
     //TODO Other CRUD methods for users
-
+    fun getUser(uuid: String)
+    {
+        viewModelScope.launch {
+            storageService.getUserByUID(uuid)
+        }
+    }
 }
 
 class UserViewModelFactory(private val storageService: UserStorageService):ViewModelProvider.Factory{

@@ -17,7 +17,7 @@ class BusStopStorageService(private val firestore: FirebaseFirestore){
                 .orderBy(CREATED_AT_FIELD, Query.Direction.DESCENDING)
                 .dataObjects()
 
-    suspend fun getPoi(busStopId: String): BusStopModel? =
+    suspend fun getBusStopByID(busStopId: String): BusStopModel? =
         firestore.collection(BUSSTOP_COLLECTION).document(busStopId).get().await().toObject()
 
     suspend fun save(busStopModel: BusStopModel): String {

@@ -84,17 +84,16 @@ fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: F
         }
     }
 
-    fun signInWithEmailAndPassword(
-        auth: FirebaseAuth,
-        mainActivity: MainActivity,
+    fun signInWithEmailAndPassword(auth: FirebaseAuth, mainActivity: MainActivity,
         email: String,
-        password: String
-    ) {
+        password: String) {
+        
         if(formViewModel.email!="" && formViewModel.password!="") {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(mainActivity) { task ->
                     if (task.isSuccessful) {
                         val user = auth.currentUser
+
                         formViewModel.reset()
                         navigateToMap()
                     } else {
