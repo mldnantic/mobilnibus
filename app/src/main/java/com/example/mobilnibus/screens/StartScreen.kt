@@ -174,7 +174,7 @@ fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: F
                     onValueChange = { formViewModel.telefon = it },
                     label = { Text("Telefon") }
                 )
-                Row(modifier = Modifier.fillMaxWidth().padding(24.dp, 0.dp)) {
+                Column(modifier = Modifier.fillMaxWidth().padding(24.dp, 0.dp)) {
                     ElevatedButton(
                         onClick = {
                             createUserWithEmailAndPassword(
@@ -182,7 +182,7 @@ fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: F
                                 mainActivity
                             )
                         },
-                        modifier = Modifier.fillMaxWidth(0.5f)
+                        modifier = Modifier.fillMaxWidth()
                     )
                     {
                         Text(text = "Register")
