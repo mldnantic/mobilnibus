@@ -35,40 +35,48 @@ fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: F
     fun createUserWithEmailAndPassword(
         auth: FirebaseAuth,
         mainActivity: MainActivity,
-        email: String,
-        password: String,
-        username: String,
-        ime: String,
-        prezime: String,
-        telefon: String
     ) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(mainActivity) { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
+        if(
+            formViewModel.email!=""&&
+            formViewModel.password!=""&&
+            formViewModel.username!=""&&
+            formViewModel.ime!=""&&
+            formViewModel.prezime!=""&&
+            formViewModel.telefon!=""
+        )
+        {
+            auth.createUserWithEmailAndPassword(formViewModel.email,formViewModel.password)
+                .addOnCompleteListener(mainActivity) { task ->
+                    if (task.isSuccessful) {
+                        val user = auth.currentUser
 
-                    val profileUpdates = userProfileChangeRequest {
-                        displayName = username
-                    }
-
-                    user!!.updateProfile(profileUpdates)
-                        .addOnCompleteListener { taskic ->
-                            if (taskic.isSuccessful) {
-                                Log.d(TAG, "User profile updated.")
-                            }
+                        val profileUpdates = userProfileChangeRequest {
+                            displayName = formViewModel.username
                         }
-                    userViewModel.addUser(user.uid,formViewModel.username,
-                        formViewModel.ime,formViewModel.prezime,formViewModel.telefon)
-                    formViewModel.reset()
-                    navigateToMap()
-                } else {
-                    Toast.makeText(
-                        mainActivity,
-                        "Registration failed.",
-                        Toast.LENGTH_SHORT,
-                    ).show()
+
+                        user!!.updateProfile(profileUpdates)
+
+                        userViewModel.addUser(user.uid,formViewModel.username,
+                            formViewModel.ime,formViewModel.prezime,formViewModel.telefon)
+                        formViewModel.reset()
+                        navigateToMap()
+                    } else {
+                        Toast.makeText(
+                            mainActivity,
+                            "Registration failed.",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    }
                 }
             }
+        else
+        {
+            Toast.makeText(
+                mainActivity,
+                "Please fill in all fields",
+                Toast.LENGTH_SHORT,
+            ).show()
+        }
     }
 
     fun signInWithEmailAndPassword(
@@ -77,20 +85,30 @@ fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: F
         email: String,
         password: String
     ) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(mainActivity) { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    formViewModel.reset()
-                    navigateToMap()
-                } else {
-                    Toast.makeText(
-                        mainActivity,
-                        "Login failed.",
-                        Toast.LENGTH_SHORT,
-                    ).show()
+        if(formViewModel.email!="" && formViewModel.password!="") {
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(mainActivity) { task ->
+                    if (task.isSuccessful) {
+                        val user = auth.currentUser
+                        formViewModel.reset()
+                        navigateToMap()
+                    } else {
+                        Toast.makeText(
+                            mainActivity,
+                            "Login failed.",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    }
                 }
-            }
+        }
+        else
+        {
+            Toast.makeText(
+                mainActivity,
+                "Please fill in email and password",
+                Toast.LENGTH_SHORT,
+            ).show()
+        }
     }
 
     if (auth.currentUser != null) {
@@ -157,13 +175,7 @@ fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: F
                         onClick = {
                             createUserWithEmailAndPassword(
                                 auth,
-                                mainActivity,
-                                formViewModel.email,
-                                formViewModel.password,
-                                formViewModel.username,
-                                formViewModel.ime,
-                                formViewModel.prezime,
-                                formViewModel.telefon
+                                mainActivity
                             )
                         },
                         modifier = Modifier.fillMaxWidth(0.5f)
