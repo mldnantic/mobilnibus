@@ -39,7 +39,9 @@ fun SettingsScreen(auth: FirebaseAuth,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center)
             {
-                Column(modifier = Modifier.fillMaxWidth().fillMaxHeight(0.85f))
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.85f))
                 {
                     Row(
                         modifier = Modifier
@@ -104,23 +106,41 @@ fun SettingsScreen(auth: FirebaseAuth,
                             }
                         }
                         Row(
-                            modifier = Modifier.fillMaxWidth().padding(8.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp),
                             horizontalArrangement = Arrangement.SpaceAround)
                         {
                             Slider(value = 0f, onValueChange = {},steps = 2, valueRange = 0f..500f)
+                        }
+                        Text(text = userViewModel.currentUserModel.firstName)
+                        Text(text = userViewModel.currentUserModel.lastName)
+                        Text(text = userViewModel.currentUserModel.phone)
+                        if(userViewModel.currentUserModel.role=="admin")
+                        {
+                            ElevatedButton(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(8.dp),
+                                onClick = {
+                                    navigateBack()
+                                })
+                            {
+                                Text("Edit bus stops",fontSize=24.sp)
+                            }
                         }
                     }
                 }
                 Row(modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp,8.dp),
+                    .padding(8.dp, 8.dp),
                     horizontalArrangement = Arrangement.End)
                 {
                     ElevatedButton(
                         modifier = Modifier
                             .fillMaxHeight()
                             .fillMaxWidth(0.25f)
-                            .padding(4.dp,0.dp,2.dp,0.dp),
+                            .padding(4.dp, 0.dp, 2.dp, 0.dp),
                         onClick = {
                             navigateBack()
                         })

@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private val busStopViewModel: BusStopViewModel by viewModels {
-        BusStopViewModelFactory(BusStopStorageService((application as BusStopApp).db))
+        BusStopViewModelFactory(BusStopStorageService((application as MobilniBusApp).db))
     }
 
     private fun startLocService()

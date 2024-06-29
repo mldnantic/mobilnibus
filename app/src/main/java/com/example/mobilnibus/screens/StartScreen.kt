@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobilnibus.MainActivity
+import com.example.mobilnibus.model.UserModel
 import com.example.mobilnibus.viemodels.FormViewModel
 import com.example.mobilnibus.viemodels.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -32,10 +33,7 @@ import com.google.firebase.auth.userProfileChangeRequest
 fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: FormViewModel,
                 userViewModel: UserViewModel, startSvc:()->Unit, navigateToMap:()->Unit) {
 
-    fun createUserWithEmailAndPassword(
-        auth: FirebaseAuth,
-        mainActivity: MainActivity,
-    ) {
+    fun createUserWithEmailAndPassword(auth: FirebaseAuth, mainActivity: MainActivity) {
         if(
             formViewModel.email!=""&&
             formViewModel.password!=""&&
@@ -58,6 +56,13 @@ fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: F
 
                         userViewModel.addUser(user.uid,formViewModel.username,
                             formViewModel.ime,formViewModel.prezime,formViewModel.telefon)
+                        userViewModel.setCurrentUser(
+                            UserModel(id = user.uid,
+                                username = formViewModel.username,
+                                firstName = formViewModel.ime,
+                                lastName = formViewModel.prezime,
+                                phone = formViewModel.telefon)
+                        )
                         formViewModel.reset()
                         navigateToMap()
                     } else {
