@@ -19,7 +19,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilnibus.viemodels.FormViewModel
 import com.example.mobilnibus.location.LocationService
-import com.example.mobilnibus.location.MobilniBusApp
 import com.example.mobilnibus.screens.MapScreen
 import com.example.mobilnibus.screens.SettingsScreen
 import com.example.mobilnibus.screens.StartScreen

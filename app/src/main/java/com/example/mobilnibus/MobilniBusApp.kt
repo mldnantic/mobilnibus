@@ -1,4 +1,4 @@
-package com.example.mobilnibus.location
+package com.example.mobilnibus
 
 import android.app.Application
 import android.app.NotificationChannel
