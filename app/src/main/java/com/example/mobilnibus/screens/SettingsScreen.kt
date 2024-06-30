@@ -17,6 +17,10 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,6 +33,7 @@ import com.google.firebase.auth.FirebaseAuth
 fun SettingsScreen(auth: FirebaseAuth,
                    userViewModel: UserViewModel,
                    navigateToStart:()->Unit,navigateBack:()->Unit,startSvc:()->Unit,stopSvc:()->Unit) {
+    var sliderPosition by remember { mutableFloatStateOf(100f) }
     Surface(color = Color.Black) {
         Surface(
             color = Color.White,
@@ -59,7 +64,7 @@ fun SettingsScreen(auth: FirebaseAuth,
                         }
                         Column {
                             auth.currentUser?.displayName?.let{
-                                Text(text = it, fontSize=24.sp, modifier = Modifier
+                                Text(text = it, fontSize=36.sp, modifier = Modifier
                                     .align(Alignment.CenterHorizontally)
                                     .padding(8.dp))
                             }
@@ -86,7 +91,8 @@ fun SettingsScreen(auth: FirebaseAuth,
                             }
                         }
                     }
-                    Column(verticalArrangement = Arrangement.Top)
+                    Column(verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.CenterHorizontally)
                     {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -105,13 +111,18 @@ fun SettingsScreen(auth: FirebaseAuth,
                                 Text("Stop tracking")
                             }
                         }
-                        Row(
+                        Column(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp),
-                            horizontalArrangement = Arrangement.SpaceAround)
+                                .fillMaxWidth(0.8f)
+                                .padding(8.dp))
                         {
-                            Slider(value = 0f, onValueChange = {},steps = 2, valueRange = 0f..500f)
+                            Text(text ="Bus stop detection radius: "+sliderPosition.toInt().toString()+"m",
+                                fontSize = 24.sp)
+                            Slider(
+                                value = sliderPosition,
+                                onValueChange = {sliderPosition=it},
+                                steps = 2,
+                                valueRange = 100f..400f)
                         }
                         Text(text = userViewModel.currentUserModel.firstName)
                         Text(text = userViewModel.currentUserModel.lastName)

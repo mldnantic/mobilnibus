@@ -54,11 +54,12 @@ fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: F
 
                         user!!.updateProfile(profileUpdates)
 
-                        userViewModel.addUser(user.uid,formViewModel.username,
+                        userViewModel.addUser(user.uid,
                             formViewModel.ime,formViewModel.prezime,formViewModel.telefon)
                         userViewModel.setCurrentUser(
-                            UserModel(uuid = user.uid, username = formViewModel.username,
-                                firstName = formViewModel.ime, lastName = formViewModel.prezime,
+                            UserModel(uuid = user.uid,
+                                firstName = formViewModel.ime,
+                                lastName = formViewModel.prezime,
                                 phone = formViewModel.telefon)
                         )
                         formViewModel.reset()

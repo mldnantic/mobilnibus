@@ -27,9 +27,9 @@ class UserViewModel(private val storageService: UserStorageService):ViewModel(){
 
     val users: Flow<List<UserModel>> = storageService.users
 
-    fun addUser(uuid: String, username:String,firstName:String,lastName:String,phone:String)
+    fun addUser(uuid: String,firstName:String,lastName:String,phone:String)
     {
-        val u = UserModel(uuid=uuid,username=username,firstName=firstName,lastName=lastName,phone=phone)
+        val u = UserModel(uuid=uuid,firstName=firstName,lastName=lastName,phone=phone)
         viewModelScope.launch{
             storageService.save(u)
         }
