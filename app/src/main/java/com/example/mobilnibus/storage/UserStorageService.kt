@@ -1,5 +1,7 @@
 package com.example.mobilnibus.storage
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import com.example.mobilnibus.model.UserModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -17,8 +19,14 @@ class UserStorageService(private val firestore: FirebaseFirestore){
                 .orderBy(CREATED_AT_FIELD, Query.Direction.DESCENDING)
                 .dataObjects()
 
-    suspend fun getUser(userId: String): UserModel? =
-        firestore.collection(USER_COLLECTION).document(userId).get().await().toObject()
+    suspend fun getUser(uuid: String) =
+        firestore.collection(USER_COLLECTION).whereEqualTo("uuid",uuid)
+            .get().addOnSuccessListener {
+                users->
+                for (user in users){
+                    Log.d(TAG, "${user.id}=>${user.data}")
+                }
+            }
 
     suspend fun save(userModel: UserModel): String {
         val updatedUser = userModel.copy()

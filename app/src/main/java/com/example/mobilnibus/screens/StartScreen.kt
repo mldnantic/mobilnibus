@@ -92,7 +92,9 @@ fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: F
                 .addOnCompleteListener(mainActivity) { task ->
                     if (task.isSuccessful) {
                         val user = auth.currentUser
-
+                        if (user != null) {
+                            userViewModel.getUser(user.uid)
+                        }
                         formViewModel.reset()
                         navigateToMap()
                     } else {
