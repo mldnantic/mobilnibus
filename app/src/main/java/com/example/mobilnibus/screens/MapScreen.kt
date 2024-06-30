@@ -49,8 +49,15 @@ fun MapScreen(auth: FirebaseAuth, navigateToSettings: () -> Unit) {
             )
         )
     }
+    val nisBounds = LatLngBounds(
+        LatLng(43.2923021, 21.8534963),  // SW bounds
+        LatLng(43.3624341, 21.9818614) // NE bounds
+    )
     val properties by remember {
-        mutableStateOf(MapProperties(mapType = MapType.NORMAL, isMyLocationEnabled = true))
+        mutableStateOf(MapProperties(mapType = MapType.NORMAL,
+            isMyLocationEnabled = true,
+            latLngBoundsForCameraTarget = nisBounds,
+            minZoomPreference = 12.0f))
     }
 
     Surface(color = Color.Black) {
