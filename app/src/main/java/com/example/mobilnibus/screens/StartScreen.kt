@@ -57,10 +57,8 @@ fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: F
                         userViewModel.addUser(user.uid,formViewModel.username,
                             formViewModel.ime,formViewModel.prezime,formViewModel.telefon)
                         userViewModel.setCurrentUser(
-                            UserModel(id = user.uid,
-                                username = formViewModel.username,
-                                firstName = formViewModel.ime,
-                                lastName = formViewModel.prezime,
+                            UserModel(uuid = user.uid, username = formViewModel.username,
+                                firstName = formViewModel.ime, lastName = formViewModel.prezime,
                                 phone = formViewModel.telefon)
                         )
                         formViewModel.reset()
