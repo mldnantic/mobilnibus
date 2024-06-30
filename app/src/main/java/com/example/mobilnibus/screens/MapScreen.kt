@@ -79,14 +79,14 @@ fun MapScreen(auth: FirebaseAuth, navigateToSettings: () -> Unit) {
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(6.dp,8.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly
+                    horizontalArrangement = Arrangement.SpaceAround
                 ) {
                     ElevatedButton(
                         onClick = { navigateToSettings() },
                         modifier = Modifier.fillMaxHeight().padding(2.dp, 0.dp)
                     )
                     {
-                        Text(text = "⚙️", fontSize = 32.sp)
+                        Text(text = "⚙️", fontSize = 24.sp)
                     }
                     ElevatedButton(
                         onClick = {
@@ -95,21 +95,21 @@ fun MapScreen(auth: FirebaseAuth, navigateToSettings: () -> Unit) {
                         modifier = Modifier.fillMaxHeight().padding(2.dp, 0.dp)
                     )
                     {
-                        Text(text = "📌", fontSize = 32.sp)
+                        Text(text = "📌", fontSize = 24.sp)
                     }
                     ElevatedButton(
                         onClick = { /*TODO*/ },
                         modifier = Modifier.fillMaxHeight().padding(2.dp, 0.dp)
                     )
                     {
-                        Text(text = "🚏", fontSize = 32.sp)
+                        Text(text = "🚏", fontSize = 24.sp)
                     }
                     ElevatedButton(
                         onClick = { /*TODO*/ },
                         modifier = Modifier.fillMaxHeight().padding(2.dp, 0.dp)
                     )
                     {
-                        Text(text = "🏅", fontSize = 32.sp)
+                        Text(text = "🏅", fontSize = 24.sp)
                     }
                 }
             }

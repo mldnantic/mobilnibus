@@ -39,7 +39,7 @@ class UserViewModel(private val storageService: UserStorageService):ViewModel(){
     fun getUser(uuid: String)
     {
         viewModelScope.launch {
-            storageService.getUserByUID(uuid)
+            storageService.getUser(uuid)
         }
     }
 }

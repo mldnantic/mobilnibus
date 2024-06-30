@@ -64,7 +64,7 @@ fun SettingsScreen(auth: FirebaseAuth,
                         }
                         Column {
                             auth.currentUser?.displayName?.let{
-                                Text(text = it, fontSize=36.sp, modifier = Modifier
+                                Text(text = it, fontSize=24.sp, modifier = Modifier
                                     .align(Alignment.CenterHorizontally)
                                     .padding(8.dp))
                             }
@@ -117,7 +117,7 @@ fun SettingsScreen(auth: FirebaseAuth,
                                 .padding(8.dp))
                         {
                             Text(text ="Bus stop detection radius: "+sliderPosition.toInt().toString()+"m",
-                                fontSize = 24.sp)
+                                fontSize = 16.sp)
                             Slider(
                                 value = sliderPosition,
                                 onValueChange = {sliderPosition=it},
@@ -150,13 +150,12 @@ fun SettingsScreen(auth: FirebaseAuth,
                     ElevatedButton(
                         modifier = Modifier
                             .fillMaxHeight()
-                            .fillMaxWidth(0.25f)
-                            .padding(4.dp, 0.dp, 2.dp, 0.dp),
+                            .padding(6.dp, 0.dp),
                         onClick = {
                             navigateBack()
                         })
                     {
-                        Text("◀️",fontSize=32.sp)
+                        Text("◀️",fontSize=24.sp)
                     }
                 }
 
