@@ -142,7 +142,7 @@ fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity,userViewModel: 
 
         composable(Screens.MapScreen.name)
         {
-            MapScreen(auth,
+            MapScreen(auth,mainActivity,
                 navigateToSettings = {navController.navigate(Screens.SettingsScreen.name)})
         }
 

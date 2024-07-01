@@ -1,5 +1,6 @@
 package com.example.mobilnibus.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mobilnibus.MainActivity
 import com.example.mobilnibus.location.LocationService
 import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.model.CameraPosition
@@ -32,7 +34,7 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
-fun MapScreen(auth: FirebaseAuth, navigateToSettings: () -> Unit) {
+fun MapScreen(auth: FirebaseAuth,mainActivity: MainActivity, navigateToSettings: () -> Unit) {
 
     val nis = LatLng(43.321445, 21.896104)
     val cameraPositionState = rememberCameraPositionState {
@@ -55,7 +57,7 @@ fun MapScreen(auth: FirebaseAuth, navigateToSettings: () -> Unit) {
     )
     val properties by remember {
         mutableStateOf(MapProperties(mapType = MapType.NORMAL,
-            isMyLocationEnabled = true,
+            isMyLocationEnabled = LocationService.isActive,
             latLngBoundsForCameraTarget = nisBounds,
             minZoomPreference = 12.0f))
     }
@@ -89,9 +91,17 @@ fun MapScreen(auth: FirebaseAuth, navigateToSettings: () -> Unit) {
                         Text(text = "⚙️", fontSize = 24.sp)
                     }
                     ElevatedButton(
-                        onClick = {
+                        onClick =
+                        {
+                            if(LocationService.isActive)
+                            {
                                   cameraPositionState.position = CameraPosition.fromLatLngZoom(LatLng(LocationService.latitude,LocationService.longitude),15f)
-                                  },
+                            }
+                            else
+                            {
+                                Toast.makeText(mainActivity, "Location service unavailable", Toast.LENGTH_SHORT).show()
+                            }
+                        },
                         modifier = Modifier.fillMaxHeight().padding(2.dp, 0.dp)
                     )
                     {

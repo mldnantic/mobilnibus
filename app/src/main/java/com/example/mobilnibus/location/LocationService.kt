@@ -63,6 +63,7 @@ class LocationService: Service() {
                 latitude = location.latitude
                 val lng = location.longitude.toString()
                 longitude = location.longitude
+                isActive=true
                 val updatedNotification = notification.setContentText(
                     "Location: ($lat,$lng)"
                 )
@@ -74,6 +75,7 @@ class LocationService: Service() {
     }
     private fun stop()
     {
+        isActive=false
         stopForeground(true)
         stopSelf()
     }
@@ -88,6 +90,7 @@ class LocationService: Service() {
         const val ACTION_STOP = "ACTION_STOP"
         var latitude:Double=0.0
         var longitude:Double=0.0
+        var isActive:Boolean=false
     }
 
 }

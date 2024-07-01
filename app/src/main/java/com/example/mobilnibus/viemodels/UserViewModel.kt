@@ -39,7 +39,6 @@ class UserViewModel(private val storageService: UserStorageService):ViewModel(){
     {
         viewModelScope.launch {
             val u = storageService.getUser(uuid)
-            Log.d(TAG,"${u.id} ${u.firstName} ${u.lastName} ${u.phone}")
             setCurrentUser(u)
         }
     }
