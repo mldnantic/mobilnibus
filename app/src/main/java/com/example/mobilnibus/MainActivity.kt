@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        enableEdgeToEdge()
+//        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         this.requestPermissions(
@@ -91,7 +91,7 @@ class MainActivity : ComponentActivity() {
     }
 
     public override fun onStart() {
-        enableEdgeToEdge()
+//        enableEdgeToEdge()
         super.onStart()
         val currentUser = auth.currentUser
         if (currentUser != null) {
