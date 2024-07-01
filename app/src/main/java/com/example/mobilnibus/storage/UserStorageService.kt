@@ -24,7 +24,7 @@ class UserStorageService(private val firestore: FirebaseFirestore){
             .get().addOnSuccessListener {
                 users->
                 for (user in users){
-                    Log.d(TAG, "${user.id}=>${user.data}")
+                    Log.d(TAG, "${user.id}=>${user.data["firstName"]}")
                 }
             }
 

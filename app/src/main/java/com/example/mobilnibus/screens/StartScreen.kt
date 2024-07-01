@@ -117,6 +117,7 @@ fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: F
     }
 
     if (auth.currentUser != null) {
+        userViewModel.getUser(auth.currentUser!!.uid)
         navigateToMap()
     }
 

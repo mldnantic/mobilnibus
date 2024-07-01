@@ -81,6 +81,7 @@ fun SettingsScreen(auth: FirebaseAuth,
                                 {
                                     stopSvc()
                                     if (auth.currentUser != null) {
+                                        userViewModel.resetCurrentUser()
                                         auth.signOut()
                                         navigateToStart()
                                     }
