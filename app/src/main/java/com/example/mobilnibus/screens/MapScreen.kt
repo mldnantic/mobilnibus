@@ -71,7 +71,7 @@ fun MapScreen(auth: FirebaseAuth, navigateToSettings: () -> Unit) {
                 verticalArrangement = Arrangement.Center
             ) {
                 GoogleMap(
-                    modifier = Modifier.fillMaxWidth().fillMaxHeight(fraction = 0.85f),
+                    modifier = Modifier.fillMaxWidth().fillMaxHeight(fraction = 0.9f),
                     cameraPositionState = cameraPositionState,
                     properties = properties,
                     uiSettings = uiSettings,

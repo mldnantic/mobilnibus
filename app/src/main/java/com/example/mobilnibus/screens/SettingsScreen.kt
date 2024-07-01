@@ -46,7 +46,7 @@ fun SettingsScreen(auth: FirebaseAuth,
             {
                 Column(modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(0.85f))
+                    .fillMaxHeight(0.9f))
                 {
                     Row(
                         modifier = Modifier
