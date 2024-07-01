@@ -124,10 +124,17 @@ fun SettingsScreen(auth: FirebaseAuth,
                                 onValueChange = {sliderPosition=it},
                                 steps = 2,
                                 valueRange = 100f..400f)
+                            Text(text = "First name:",fontSize = 16.sp,
+                                modifier = Modifier.padding(0.dp,8.dp))
+                            Text(text = userViewModel.currentUserModel.firstName,fontSize = 24.sp)
+                            Text(text = "Last name:",fontSize = 16.sp,
+                                modifier = Modifier.padding(0.dp,8.dp))
+                            Text(text = userViewModel.currentUserModel.lastName,fontSize = 24.sp)
+                            Text(text = "Phone:",fontSize = 16.sp,
+                                modifier = Modifier.padding(0.dp,8.dp))
+                            Text(text = userViewModel.currentUserModel.phone,fontSize = 24.sp)
                         }
-                        Text(text = userViewModel.currentUserModel.firstName)
-                        Text(text = userViewModel.currentUserModel.lastName)
-                        Text(text = userViewModel.currentUserModel.phone)
+
                         if(userViewModel.currentUserModel.role=="admin")
                         {
                             ElevatedButton(

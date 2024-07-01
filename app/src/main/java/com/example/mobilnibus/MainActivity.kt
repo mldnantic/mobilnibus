@@ -95,6 +95,7 @@ class MainActivity : ComponentActivity() {
         super.onStart()
         val currentUser = auth.currentUser
         if (currentUser != null) {
+            userViewModel.getUser(currentUser.uid)
             setContent {
                     Surface(modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background)

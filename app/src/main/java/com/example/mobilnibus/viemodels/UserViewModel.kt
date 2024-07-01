@@ -1,5 +1,7 @@
 package com.example.mobilnibus.viemodels
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -25,8 +27,6 @@ class UserViewModel(private val storageService: UserStorageService):ViewModel(){
         currentUserModel=UserModel()
     }
 
-    val users: Flow<List<UserModel>> = storageService.users
-
     fun addUser(uuid: String,firstName:String,lastName:String,phone:String)
     {
         val u = UserModel(uuid=uuid,firstName=firstName,lastName=lastName,phone=phone)
@@ -35,11 +35,12 @@ class UserViewModel(private val storageService: UserStorageService):ViewModel(){
         }
     }
 
-    //TODO Other CRUD methods for users
     fun getUser(uuid: String)
     {
         viewModelScope.launch {
-            storageService.getUser(uuid)
+            val u = storageService.getUser(uuid)
+            Log.d(TAG,"${u.id} ${u.firstName} ${u.lastName} ${u.phone}")
+            setCurrentUser(u)
         }
     }
 }
