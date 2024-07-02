@@ -126,6 +126,12 @@ fun SettingsScreen(
                                 }
                                 ElevatedButton(onClick = {
                                     stopSvc()
+                                    if(userViewModel.currentUserModel.role=="bus")
+                                    {
+                                            busMarkerViewModel.deleteBusMarker(
+                                                userViewModel.currentUserModel.id
+                                            )
+                                    }
                                 })
                                 {
                                     Text("Stop tracking")

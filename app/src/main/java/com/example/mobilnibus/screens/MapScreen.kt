@@ -124,7 +124,10 @@ fun MapScreen(
                     busMarkersList.value.forEach{
                         val busMarker = it
                         Marker(
-                            title = busMarker.linija)
+                            icon = BitmapDescriptorFactory.fromResource(R.drawable.icons8_bus_32),
+                            title = busMarker.linija,
+                            state = MarkerState(position = LatLng(busMarker.lat,busMarker.lng))
+                            )
                     }
                 }
                 Row(
@@ -147,6 +150,15 @@ fun MapScreen(
                             if(LocationService.isActive) {
                                   cameraPositionState.position = CameraPosition.
                                   fromLatLngZoom(LatLng(LocationService.latitude,LocationService.longitude),15f)
+                                if(userViewModel.currentUserModel.role=="bus")
+                                {
+                                        busMarkerViewModel.addBusMarker(
+                                            userViewModel.currentUserModel.id,
+                                            userViewModel.currentUserModel.lastName,
+                                            LocationService.latitude,
+                                            LocationService.longitude
+                                        )
+                                }
                             }
                             else {
                                 Toast.makeText(mainActivity, "Location service unavailable", Toast.LENGTH_SHORT).show()
