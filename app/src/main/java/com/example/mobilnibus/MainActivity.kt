@@ -41,8 +41,6 @@ import com.google.firebase.ktx.Firebase
 class MainActivity : ComponentActivity() {
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var geofencingClient: GeofencingClient
-    private val geofenceList: MutableList<Geofence> = mutableListOf()
 
     private val userViewModel: UserViewModel by viewModels {
         UserViewModelFactory(UserStorageService((application as MobilniBusApp).db))
@@ -68,36 +66,25 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun getGeofencingRequest(): GeofencingRequest {
-        return GeofencingRequest.Builder().apply {
-            setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
-            addGeofences(geofenceList)
-        }.build()
-    }
-
-    @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
 
-//        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         this.requestPermissions(
             arrayOf(
                 Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION
             ),
             0
         )
 
         auth = Firebase.auth
-        geofencingClient = LocationServices.getGeofencingClient(this)
 
         setContent {
                 Surface(modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background)
                 {
-                    MobilniBusApp(auth, this,userViewModel,busStopViewModel,geofenceList,
+                    MobilniBusApp(auth, this,userViewModel,busStopViewModel,
                         svcStart = {
                             startLocService()
                         },
@@ -109,25 +96,10 @@ class MainActivity : ComponentActivity() {
     }
 
     public override fun onStart() {
-//        enableEdgeToEdge()
         super.onStart()
         val currentUser = auth.currentUser
         if (currentUser != null) {
             userViewModel.getUser(currentUser.uid)
-            setContent {
-                    Surface(modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background)
-                    {
-                        MobilniBusApp(auth, this,userViewModel,busStopViewModel,geofenceList,
-                            svcStart = {
-                                startLocService()
-
-                            },
-                            svcStop = {
-                                stopLocService()
-                            })
-                    }
-            }
         }
     }
 
@@ -144,8 +116,9 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity,userViewModel: UserViewModel, busStopViewModel: BusStopViewModel,
-                  geofenceList:MutableList<Geofence>, svcStart:()->Unit,svcStop:()->Unit) {
+fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity,userViewModel: UserViewModel,
+                  busStopViewModel: BusStopViewModel, svcStart:()->Unit,svcStop:()->Unit)
+{
     val navController = rememberNavController()
     val formViewModel: FormViewModel = viewModel()
     val editBusStopViewModel: EditBusStopViewModel = viewModel()
@@ -169,8 +142,7 @@ fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity,userViewModel: 
                     editBusStopViewModel.setLatLng(latLng.latitude,latLng.longitude)
                     navController.navigate(Screens.AddBusStopScreen.name)
                 },
-                list = busStopsList.value,
-                geofenceList)
+                list = busStopsList.value)
         }
 
         composable(Screens.AddBusStopScreen.name)

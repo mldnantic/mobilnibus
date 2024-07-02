@@ -50,8 +50,7 @@ fun MapScreen(
     busStopViewModel: BusStopViewModel,
     navigateToSettings: () -> Unit,
     onMapLongClick:(LatLng) ->Unit,
-    list: List<BusStopModel>,
-    geofenceList:MutableList<Geofence>)
+    list: List<BusStopModel>)
 {
     val nis = LatLng(43.321445, 21.896104)
     val cameraPositionState = rememberCameraPositionState {
@@ -106,12 +105,6 @@ fun MapScreen(
                 {
                     list.forEach {
                         val busStop = it
-                        geofenceList.add(Geofence.Builder()
-                            .setRequestId(it.id)
-                            .setCircularRegion(it.lat,it.lng, 50F)
-                            .setExpirationDuration(10*60*1000)
-                            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
-                            .build())
                         Marker(
                             state = MarkerState(position = LatLng(it.lat,it.lng)),
                             icon = BitmapDescriptorFactory.fromResource(R.drawable.bus_stop),
