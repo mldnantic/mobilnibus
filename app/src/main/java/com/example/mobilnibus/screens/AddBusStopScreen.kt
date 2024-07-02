@@ -1,5 +1,6 @@
 package com.example.mobilnibus.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,14 +19,15 @@ import com.example.mobilnibus.viemodels.BusStopViewModel
 import com.example.mobilnibus.viemodels.EditBusStopViewModel
 
 @Composable
-fun AddPoiScreen(editBusStopViewModel: EditBusStopViewModel = viewModel(),
+fun AddBusStopScreen(editBusStopViewModel: EditBusStopViewModel = viewModel(),
                  busStopViewModel: BusStopViewModel,
                  navigateToMap: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         val modifier = Modifier.padding(8.dp)
         OutlinedTextField(

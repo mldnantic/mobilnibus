@@ -10,9 +10,7 @@ import kotlinx.coroutines.tasks.await
 
 class BusStopStorageService(private val firestore: FirebaseFirestore){
 
-    val busstops: Flow<List<BusStopModel>>
-        get() =
-            firestore
+    val busstops: Flow<List<BusStopModel>> get() = firestore
                 .collection(BUSSTOP_COLLECTION)
                 .orderBy(CREATED_AT_FIELD, Query.Direction.DESCENDING)
                 .dataObjects()

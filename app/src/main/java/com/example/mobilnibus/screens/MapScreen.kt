@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobilnibus.MainActivity
 import com.example.mobilnibus.location.LocationService
+import com.example.mobilnibus.model.BusStopModel
+import com.example.mobilnibus.viemodels.BusStopViewModel
 import com.example.mobilnibus.viemodels.UserViewModel
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -31,14 +33,18 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.MapUiSettings
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
 fun MapScreen(
     auth: FirebaseAuth, mainActivity: MainActivity,
     userViewModel: UserViewModel,
+    busStopViewModel: BusStopViewModel,
     navigateToSettings: () -> Unit,
-    onMapLongClick:(LatLng) ->Unit
+    onMapLongClick:(LatLng) ->Unit,
+    list: List<BusStopModel>
 ) {
 
     val nis = LatLng(43.321445, 21.896104)
@@ -83,16 +89,30 @@ fun MapScreen(
                     properties = properties,
                     uiSettings = uiSettings,
                     contentPadding = PaddingValues(8.dp),
-                    onMapLongClick = {
+                    onMapLongClick = {latLng->
                         if(userViewModel.currentUserModel.role=="admin")
                         {
                             Toast.makeText(mainActivity, "Adding bus stop...", Toast.LENGTH_SHORT).show()
+                            onMapLongClick(latLng)
                         }
                     }
                 )
+                {
+                    list.forEach {
+                        val busStop = it
+                        Marker(
+                            state = MarkerState(position = LatLng(it.lat,it.lng)),
+                            onClick ={
+                                busStopViewModel.setCurrentBusStop(busStop)
+
+                                return@Marker false
+                            }
+                        )
+                    }
+                }
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(6.dp,8.dp),
-                    horizontalArrangement = Arrangement.SpaceAround
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     ElevatedButton(
                         onClick = { navigateToSettings() },

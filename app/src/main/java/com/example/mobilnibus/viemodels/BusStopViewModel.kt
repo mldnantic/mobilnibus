@@ -36,7 +36,7 @@ class BusStopViewModel(private val storageService: BusStopStorageService): ViewM
             }
     }
 
-    fun deleteBusStop(user: UserModel,id:String)
+    fun deleteBusStop(id:String)
     {
         viewModelScope.launch {
             storageService.delete(id)

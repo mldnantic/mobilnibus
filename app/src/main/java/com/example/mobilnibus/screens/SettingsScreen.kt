@@ -171,13 +171,13 @@ fun SettingsScreen(auth: FirebaseAuth,
                 }
                 Row(modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp, 8.dp),
+                    .padding(0.dp, 8.dp),
                     horizontalArrangement = Arrangement.End)
                 {
                     ElevatedButton(
                         modifier = Modifier
                             .fillMaxHeight()
-                            .padding(6.dp, 0.dp),
+                            .padding(8.dp, 0.dp),
                         onClick = {
                             navigateBack()
                         })
