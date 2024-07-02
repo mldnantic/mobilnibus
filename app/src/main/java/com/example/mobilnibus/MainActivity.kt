@@ -65,6 +65,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
 
 //        enableEdgeToEdge()

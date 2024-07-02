@@ -1,5 +1,6 @@
 package com.example.mobilnibus.screens
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,7 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,6 +28,7 @@ import com.example.mobilnibus.location.LocationService
 import com.example.mobilnibus.model.BusStopModel
 import com.example.mobilnibus.viemodels.BusStopViewModel
 import com.example.mobilnibus.viemodels.UserViewModel
+import com.google.android.gms.location.Geofence
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -38,6 +41,7 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
+import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun MapScreen(
@@ -74,7 +78,7 @@ fun MapScreen(
             latLngBoundsForCameraTarget = nisBounds,
             minZoomPreference = 12.0f))
     }
-
+    val geofenceList: MutableList<Geofence> = mutableListOf()
     Surface(color = Color.Black) {
         Surface(
             color = Color.White,
@@ -102,6 +106,12 @@ fun MapScreen(
                 {
                     list.forEach {
                         val busStop = it
+                        geofenceList.add(Geofence.Builder()
+                            .setRequestId(it.id)
+                            .setCircularRegion(it.lat,it.lng, 50F)
+                            .setExpirationDuration(10*60*1000)
+                            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+                            .build())
                         Marker(
                             state = MarkerState(position = LatLng(it.lat,it.lng)),
                             icon = BitmapDescriptorFactory.fromResource(R.drawable.bus_stop),
