@@ -102,6 +102,14 @@ fun SettingsScreen(
                             horizontalAlignment = Alignment.CenterHorizontally
                         )
                         {
+                            if(userViewModel.currentUserModel.role=="bus")
+                            {
+                                Text(
+                                    text = "Bus mode",
+                                    fontSize = 24.sp,
+                                    fontFamily = FontFamily.Monospace
+                                )
+                            }
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceAround

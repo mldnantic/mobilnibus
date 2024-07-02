@@ -60,10 +60,17 @@ class LocationService: Service() {
             }
             .onEach { location ->
                 val lat = location.latitude.toString()
-                latitude = location.latitude
                 val lng = location.longitude.toString()
+
+                //LocationViewModel
+                latitude = location.latitude
                 longitude = location.longitude
                 isActive=true
+
+                //Create/update bus marker
+
+
+
                 val updatedNotification = notification.setContentText(
                     "Location: ($lat,$lng)"
                 )
