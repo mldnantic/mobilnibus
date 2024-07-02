@@ -50,9 +50,9 @@ fun MapScreen(
     busStopViewModel: BusStopViewModel,
     navigateToSettings: () -> Unit,
     onMapLongClick:(LatLng) ->Unit,
-    list: List<BusStopModel>
-) {
-
+    list: List<BusStopModel>,
+    geofenceList:MutableList<Geofence>)
+{
     val nis = LatLng(43.321445, 21.896104)
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(nis, 15f)
@@ -78,7 +78,7 @@ fun MapScreen(
             latLngBoundsForCameraTarget = nisBounds,
             minZoomPreference = 12.0f))
     }
-    val geofenceList: MutableList<Geofence> = mutableListOf()
+
     Surface(color = Color.Black) {
         Surface(
             color = Color.White,

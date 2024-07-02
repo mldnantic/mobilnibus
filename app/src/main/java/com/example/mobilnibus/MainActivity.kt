@@ -30,7 +30,9 @@ import com.example.mobilnibus.viemodels.BusStopViewModelFactory
 import com.example.mobilnibus.viemodels.EditBusStopViewModel
 import com.example.mobilnibus.viemodels.UserViewModel
 import com.example.mobilnibus.viemodels.UserViewModelFactory
+import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
+import com.google.android.gms.location.GeofencingRequest
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -40,6 +42,7 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var geofencingClient: GeofencingClient
+    private val geofenceList: MutableList<Geofence> = mutableListOf()
 
     private val userViewModel: UserViewModel by viewModels {
         UserViewModelFactory(UserStorageService((application as MobilniBusApp).db))
@@ -65,6 +68,13 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private fun getGeofencingRequest(): GeofencingRequest {
+        return GeofencingRequest.Builder().apply {
+            setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+            addGeofences(geofenceList)
+        }.build()
+    }
+
     @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -87,7 +97,7 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background)
                 {
-                    MobilniBusApp(auth, this,userViewModel,busStopViewModel,
+                    MobilniBusApp(auth, this,userViewModel,busStopViewModel,geofenceList,
                         svcStart = {
                             startLocService()
                         },
@@ -108,7 +118,7 @@ class MainActivity : ComponentActivity() {
                     Surface(modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background)
                     {
-                        MobilniBusApp(auth, this,userViewModel,busStopViewModel,
+                        MobilniBusApp(auth, this,userViewModel,busStopViewModel,geofenceList,
                             svcStart = {
                                 startLocService()
 
@@ -135,7 +145,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity,userViewModel: UserViewModel, busStopViewModel: BusStopViewModel,
-                  svcStart:()->Unit,svcStop:()->Unit) {
+                  geofenceList:MutableList<Geofence>, svcStart:()->Unit,svcStop:()->Unit) {
     val navController = rememberNavController()
     val formViewModel: FormViewModel = viewModel()
     val editBusStopViewModel: EditBusStopViewModel = viewModel()
@@ -159,7 +169,8 @@ fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity,userViewModel: 
                     editBusStopViewModel.setLatLng(latLng.latitude,latLng.longitude)
                     navController.navigate(Screens.AddBusStopScreen.name)
                 },
-                list = busStopsList.value)
+                list = busStopsList.value,
+                geofenceList)
         }
 
         composable(Screens.AddBusStopScreen.name)
