@@ -32,14 +32,16 @@ import com.example.mobilnibus.viemodels.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun SettingsScreen(auth: FirebaseAuth,
-                   userViewModel: UserViewModel,
-                   navigateToStart:()->Unit,navigateBack:()->Unit,startSvc:()->Unit,stopSvc:()->Unit) {
-    var sliderPosition by remember { mutableFloatStateOf(100f) }
+fun SettingsScreen(
+    auth: FirebaseAuth,
+    userViewModel: UserViewModel,
+    navigateToStart:()->Unit,
+    navigateBack:()->Unit,
+    startSvc:()->Unit,
+    stopSvc:()->Unit)
+{
     Surface(color = Color.Black) {
-        Surface(
-            color = Color.White,
-            /*modifier = Modifier.padding(0.dp, 72.dp, 0.dp, 72.dp)*/)
+        Surface(color = Color.White)
         {
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -96,7 +98,7 @@ fun SettingsScreen(auth: FirebaseAuth,
                     }
                     if(userViewModel.currentUserModel.role!="admin") {
                         Column(
-                            verticalArrangement = Arrangement.Top,
+                            verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
                         )
                         {
@@ -125,17 +127,6 @@ fun SettingsScreen(auth: FirebaseAuth,
                             )
                             {
                                 Text(
-                                    text = "Bus stop detection radius: " + sliderPosition.toInt()
-                                        .toString() + "m",
-                                    fontSize = 16.sp
-                                )
-                                Slider(
-                                    value = sliderPosition,
-                                    onValueChange = { sliderPosition = it },
-                                    steps = 2,
-                                    valueRange = 100f..400f
-                                )
-                                Text(
                                     text = "First name:", fontSize = 16.sp,
                                     modifier = Modifier.padding(0.dp, 8.dp)
                                 )
@@ -155,7 +146,8 @@ fun SettingsScreen(auth: FirebaseAuth,
                                     text = "Phone:", fontSize = 16.sp,
                                     modifier = Modifier.padding(0.dp, 8.dp)
                                 )
-                                Text(text = userViewModel.currentUserModel.phone, fontSize = 24.sp)
+                                Text(text = userViewModel.currentUserModel.phone,
+                                    fontSize = 24.sp)
                             }
                         }
                     }
@@ -169,14 +161,11 @@ fun SettingsScreen(auth: FirebaseAuth,
                         }
                     }
                 }
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(0.dp, 8.dp),
-                    horizontalArrangement = Arrangement.End)
+                Row(modifier = Modifier.fillMaxWidth().padding(0.dp, 8.dp))
                 {
                     ElevatedButton(
                         modifier = Modifier
-                            .fillMaxHeight()
+                            .fillMaxSize()
                             .padding(8.dp, 0.dp),
                         onClick = {
                             navigateBack()

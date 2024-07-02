@@ -81,7 +81,6 @@ fun MapScreen(
     Surface(color = Color.Black) {
         Surface(
             color = Color.White,
-//            modifier = Modifier.padding(0.dp, 72.dp, 0.dp, 72.dp)
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -128,28 +127,18 @@ fun MapScreen(
                         Text(text = "⚙️", fontSize = 24.sp)
                     }
                     ElevatedButton(
-                        onClick =
-                        {
-                            if(LocationService.isActive)
-                            {
-                                  cameraPositionState.position = CameraPosition.fromLatLngZoom(LatLng(LocationService.latitude,LocationService.longitude),15f)
+                        onClick = {
+                            if(LocationService.isActive) {
+                                  cameraPositionState.position = CameraPosition.
+                                  fromLatLngZoom(LatLng(LocationService.latitude,LocationService.longitude),15f)
                             }
-                            else
-                            {
+                            else {
                                 Toast.makeText(mainActivity, "Location service unavailable", Toast.LENGTH_SHORT).show()
-                            }
-                        },
+                            } },
                         modifier = Modifier.fillMaxHeight().padding(2.dp, 0.dp)
                     )
                     {
                         Text(text = "📌", fontSize = 24.sp)
-                    }
-                    ElevatedButton(
-                        onClick = { /*TODO*/ },
-                        modifier = Modifier.fillMaxHeight().padding(2.dp, 0.dp)
-                    )
-                    {
-                        Text(text = "🚏", fontSize = 24.sp)
                     }
                     ElevatedButton(
                         onClick = { /*TODO*/ },

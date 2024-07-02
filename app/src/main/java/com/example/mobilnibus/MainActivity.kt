@@ -50,16 +50,14 @@ class MainActivity : ComponentActivity() {
         BusStopViewModelFactory(BusStopStorageService((application as MobilniBusApp).db))
     }
 
-    private fun startLocService()
-    {
+    private fun startLocService() {
         Intent(this, LocationService::class.java).apply {
             action = LocationService.ACTION_START
             startService(this)
         }
     }
 
-    private fun stopLocService()
-    {
+    private fun stopLocService() {
         Intent(this, LocationService::class.java).apply {
             action = LocationService.ACTION_STOP
             startService(this)
@@ -81,8 +79,7 @@ class MainActivity : ComponentActivity() {
         auth = Firebase.auth
 
         setContent {
-                Surface(modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background)
+                Surface(modifier = Modifier.fillMaxSize())
                 {
                     MobilniBusApp(auth, this,userViewModel,busStopViewModel,
                         svcStart = {
@@ -116,8 +113,13 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity,userViewModel: UserViewModel,
-                  busStopViewModel: BusStopViewModel, svcStart:()->Unit,svcStop:()->Unit)
+fun MobilniBusApp(
+    auth: FirebaseAuth,
+    mainActivity: MainActivity,
+    userViewModel: UserViewModel,
+    busStopViewModel: BusStopViewModel,
+    svcStart:()->Unit,
+    svcStop:()->Unit)
 {
     val navController = rememberNavController()
     val formViewModel: FormViewModel = viewModel()
@@ -138,10 +140,10 @@ fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity,userViewModel: 
             val busStopsList = busStopViewModel.busStops.collectAsState(initial = listOf())
             MapScreen(auth,mainActivity,userViewModel,busStopViewModel,
                 navigateToSettings = {navController.navigate(Screens.SettingsScreen.name)},
+
                 onMapLongClick = { latLng ->
                     editBusStopViewModel.setLatLng(latLng.latitude,latLng.longitude)
-                    navController.navigate(Screens.AddBusStopScreen.name)
-                },
+                    navController.navigate(Screens.AddBusStopScreen.name) },
                 list = busStopsList.value)
         }
 
