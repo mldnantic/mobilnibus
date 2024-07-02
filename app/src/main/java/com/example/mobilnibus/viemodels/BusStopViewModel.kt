@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mobilnibus.model.BusStopModel
-import com.example.mobilnibus.model.UserModel
 import com.example.mobilnibus.storage.BusStopStorageService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
