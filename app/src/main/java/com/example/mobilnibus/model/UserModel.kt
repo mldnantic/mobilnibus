@@ -7,7 +7,7 @@ import java.util.Date
 data class UserModel (
     @DocumentId val id: String = "",
     @ServerTimestamp val createdAt: Date = Date(),
-    val uuid: String = "",
+    val uid: String = "",
     val firstName: String = "",
     val lastName: String = "",
     val phone: String = "",

@@ -27,18 +27,18 @@ class UserViewModel(private val storageService: UserStorageService):ViewModel(){
         currentUserModel=UserModel()
     }
 
-    fun addUser(uuid: String,firstName:String,lastName:String,phone:String)
+    fun addUser(uid: String,firstName:String,lastName:String,phone:String)
     {
-        val u = UserModel(uuid=uuid,firstName=firstName,lastName=lastName,phone=phone)
+        val u = UserModel(uid=uid,firstName=firstName,lastName=lastName,phone=phone)
         viewModelScope.launch{
             storageService.save(u)
         }
     }
 
-    fun getUser(uuid: String)
+    fun getUser(uid: String)
     {
         viewModelScope.launch {
-            val u = storageService.getUser(uuid)
+            val u = storageService.getUser(uid)
             setCurrentUser(u)
         }
     }

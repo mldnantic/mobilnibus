@@ -12,8 +12,8 @@ import kotlinx.coroutines.tasks.await
 
 class UserStorageService(private val firestore: FirebaseFirestore){
 
-    suspend fun getUser(uuid: String): UserModel {
-        return firestore.collection(USER_COLLECTION).whereEqualTo("uuid", uuid)
+    suspend fun getUser(uid: String): UserModel {
+        return firestore.collection(USER_COLLECTION).whereEqualTo("uid", uid)
             .get().await().first().toObject<UserModel>()
     }
 

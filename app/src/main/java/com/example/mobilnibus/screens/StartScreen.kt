@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -19,6 +20,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobilnibus.MainActivity
@@ -57,7 +60,7 @@ fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: F
                         userViewModel.addUser(user.uid,
                             formViewModel.ime,formViewModel.prezime,formViewModel.telefon)
                         userViewModel.setCurrentUser(
-                            UserModel(uuid = user.uid,
+                            UserModel(uid = user.uid,
                                 firstName = formViewModel.ime,
                                 lastName = formViewModel.prezime,
                                 phone = formViewModel.telefon)
@@ -142,36 +145,44 @@ fun StartScreen(auth: FirebaseAuth, mainActivity: MainActivity, formViewModel: F
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth().padding(24.dp, 0.dp),
                     value = formViewModel.email,
+                    singleLine = true,
                     onValueChange = { formViewModel.email = it },
                     label = { Text("Email") }
                 )
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth().padding(24.dp, 0.dp),
                     value = formViewModel.username,
+                    singleLine = true,
                     onValueChange = { formViewModel.username = it },
                     label = { Text("Username") }
                 )
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth().padding(24.dp, 0.dp),
                     value = formViewModel.password,
+                    singleLine = true,
+                    visualTransformation = PasswordVisualTransformation(),
                     onValueChange = { formViewModel.password = it },
                     label = { Text("Password") }
                 )
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth().padding(24.dp, 0.dp),
                     value = formViewModel.ime,
+                    singleLine = true,
                     onValueChange = { formViewModel.ime = it },
                     label = { Text("Ime") }
                 )
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth().padding(24.dp, 0.dp),
                     value = formViewModel.prezime,
+                    singleLine = true,
                     onValueChange = { formViewModel.prezime = it },
                     label = { Text("Prezime") }
                 )
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth().padding(24.dp, 0.dp),
                     value = formViewModel.telefon,
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                     onValueChange = { formViewModel.telefon = it },
                     label = { Text("Telefon") }
                 )
