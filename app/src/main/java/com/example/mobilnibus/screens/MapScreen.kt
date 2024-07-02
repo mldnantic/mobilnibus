@@ -21,10 +21,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobilnibus.MainActivity
+import com.example.mobilnibus.R
 import com.example.mobilnibus.location.LocationService
 import com.example.mobilnibus.model.BusStopModel
 import com.example.mobilnibus.viemodels.BusStopViewModel
 import com.example.mobilnibus.viemodels.UserViewModel
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
@@ -102,6 +104,7 @@ fun MapScreen(
                         val busStop = it
                         Marker(
                             state = MarkerState(position = LatLng(it.lat,it.lng)),
+                            icon = BitmapDescriptorFactory.fromResource(R.drawable.bus_stop),
                             onClick ={
                                 busStopViewModel.setCurrentBusStop(busStop)
 
