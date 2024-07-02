@@ -28,15 +28,12 @@ class BusStopViewModel(private val storageService: BusStopStorageService): ViewM
         busStop=BusStopModel()
     }
 
-    fun addBusStop(user:UserModel,name:String,lat:Double,lng:Double)
+    fun addBusStop(name:String,lat:Double,lng:Double)
     {
-        if(user.role=="admin")
-        {
             val b = BusStopModel(name=name,lat=lat,lng=lng)
             viewModelScope.launch {
                 storageService.save(b)
             }
-        }
     }
 
     fun deleteBusStop(user: UserModel,id:String)

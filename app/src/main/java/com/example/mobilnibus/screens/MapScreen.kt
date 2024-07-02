@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobilnibus.MainActivity
 import com.example.mobilnibus.location.LocationService
-import com.google.android.gms.maps.GoogleMapOptions
+import com.example.mobilnibus.viemodels.UserViewModel
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
@@ -34,7 +34,12 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
-fun MapScreen(auth: FirebaseAuth,mainActivity: MainActivity, navigateToSettings: () -> Unit) {
+fun MapScreen(
+    auth: FirebaseAuth, mainActivity: MainActivity,
+    userViewModel: UserViewModel,
+    navigateToSettings: () -> Unit,
+    onMapLongClick:(LatLng) ->Unit
+) {
 
     val nis = LatLng(43.321445, 21.896104)
     val cameraPositionState = rememberCameraPositionState {
@@ -77,7 +82,13 @@ fun MapScreen(auth: FirebaseAuth,mainActivity: MainActivity, navigateToSettings:
                     cameraPositionState = cameraPositionState,
                     properties = properties,
                     uiSettings = uiSettings,
-                    contentPadding = PaddingValues(8.dp)
+                    contentPadding = PaddingValues(8.dp),
+                    onMapLongClick = {
+                        if(userViewModel.currentUserModel.role=="admin")
+                        {
+                            Toast.makeText(mainActivity, "Adding bus stop...", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(6.dp,8.dp),

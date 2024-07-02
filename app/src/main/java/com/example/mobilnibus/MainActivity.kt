@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -26,8 +25,11 @@ import com.example.mobilnibus.storage.BusStopStorageService
 import com.example.mobilnibus.storage.UserStorageService
 import com.example.mobilnibus.viemodels.BusStopViewModel
 import com.example.mobilnibus.viemodels.BusStopViewModelFactory
+import com.example.mobilnibus.viemodels.EditBusStopViewModel
 import com.example.mobilnibus.viemodels.UserViewModel
 import com.example.mobilnibus.viemodels.UserViewModelFactory
+import com.google.android.gms.location.GeofencingClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -35,6 +37,7 @@ import com.google.firebase.ktx.Firebase
 class MainActivity : ComponentActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var geofencingClient: GeofencingClient
 
     private val userViewModel: UserViewModel by viewModels {
         UserViewModelFactory(UserStorageService((application as MobilniBusApp).db))
@@ -74,6 +77,7 @@ class MainActivity : ComponentActivity() {
         )
 
         auth = Firebase.auth
+        geofencingClient = LocationServices.getGeofencingClient(this)
 
         setContent {
                 Surface(modifier = Modifier.fillMaxSize(),
@@ -129,6 +133,7 @@ class MainActivity : ComponentActivity() {
 fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity,userViewModel: UserViewModel, svcStart:()->Unit,svcStop:()->Unit) {
     val navController = rememberNavController()
     val formViewModel: FormViewModel = viewModel()
+    val editBusStopViewModel: EditBusStopViewModel = viewModel()
 
     NavHost(navController = navController, startDestination = Screens.StartScreen.name) {
 
@@ -142,8 +147,12 @@ fun MobilniBusApp(auth: FirebaseAuth, mainActivity: MainActivity,userViewModel: 
 
         composable(Screens.MapScreen.name)
         {
-            MapScreen(auth,mainActivity,
-                navigateToSettings = {navController.navigate(Screens.SettingsScreen.name)})
+            MapScreen(auth,mainActivity,userViewModel,
+                navigateToSettings = {navController.navigate(Screens.SettingsScreen.name)},
+                onMapLongClick = { latlng ->
+                    editBusStopViewModel.setLatLng(latlng.latitude,latlng.longitude)
+                    navController.navigate(Screens.SettingsScreen.name)
+                })
         }
 
         composable(Screens.SettingsScreen.name)

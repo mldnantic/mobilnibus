@@ -24,6 +24,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobilnibus.viemodels.UserViewModel
@@ -92,61 +94,78 @@ fun SettingsScreen(auth: FirebaseAuth,
                             }
                         }
                     }
-                    Column(verticalArrangement = Arrangement.Top,
-                        horizontalAlignment = Alignment.CenterHorizontally)
-                    {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceAround)
-                        {
-                            ElevatedButton(onClick = {
-                                startSvc()
-                            })
-                            {
-                                Text("Track location")
-                            }
-                            ElevatedButton(onClick = {
-                                stopSvc()
-                            })
-                            {
-                                Text("Stop tracking")
-                            }
-                        }
+                    if(userViewModel.currentUserModel.role!="admin") {
                         Column(
-                            modifier = Modifier
-                                .fillMaxWidth(0.8f)
-                                .padding(8.dp))
+                            verticalArrangement = Arrangement.Top,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        )
                         {
-                            Text(text ="Bus stop detection radius: "+sliderPosition.toInt().toString()+"m",
-                                fontSize = 16.sp)
-                            Slider(
-                                value = sliderPosition,
-                                onValueChange = {sliderPosition=it},
-                                steps = 2,
-                                valueRange = 100f..400f)
-                            Text(text = "First name:",fontSize = 16.sp,
-                                modifier = Modifier.padding(0.dp,8.dp))
-                            Text(text = userViewModel.currentUserModel.firstName,fontSize = 24.sp)
-                            Text(text = "Last name:",fontSize = 16.sp,
-                                modifier = Modifier.padding(0.dp,8.dp))
-                            Text(text = userViewModel.currentUserModel.lastName,fontSize = 24.sp)
-                            Text(text = "Phone:",fontSize = 16.sp,
-                                modifier = Modifier.padding(0.dp,8.dp))
-                            Text(text = userViewModel.currentUserModel.phone,fontSize = 24.sp)
-                        }
-
-                        if(userViewModel.currentUserModel.role=="admin")
-                        {
-                            ElevatedButton(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(8.dp),
-                                onClick = {
-                                    navigateBack()
-                                })
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceAround
+                            )
                             {
-                                Text("Edit bus stops",fontSize=24.sp)
+                                ElevatedButton(onClick = {
+                                    startSvc()
+                                })
+                                {
+                                    Text("Track location")
+                                }
+                                ElevatedButton(onClick = {
+                                    stopSvc()
+                                })
+                                {
+                                    Text("Stop tracking")
+                                }
                             }
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth(0.8f)
+                                    .padding(8.dp)
+                            )
+                            {
+                                Text(
+                                    text = "Bus stop detection radius: " + sliderPosition.toInt()
+                                        .toString() + "m",
+                                    fontSize = 16.sp
+                                )
+                                Slider(
+                                    value = sliderPosition,
+                                    onValueChange = { sliderPosition = it },
+                                    steps = 2,
+                                    valueRange = 100f..400f
+                                )
+                                Text(
+                                    text = "First name:", fontSize = 16.sp,
+                                    modifier = Modifier.padding(0.dp, 8.dp)
+                                )
+                                Text(
+                                    text = userViewModel.currentUserModel.firstName,
+                                    fontSize = 24.sp
+                                )
+                                Text(
+                                    text = "Last name:", fontSize = 16.sp,
+                                    modifier = Modifier.padding(0.dp, 8.dp)
+                                )
+                                Text(
+                                    text = userViewModel.currentUserModel.lastName,
+                                    fontSize = 24.sp
+                                )
+                                Text(
+                                    text = "Phone:", fontSize = 16.sp,
+                                    modifier = Modifier.padding(0.dp, 8.dp)
+                                )
+                                Text(text = userViewModel.currentUserModel.phone, fontSize = 24.sp)
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Column()
+                        {
+                            Text(text = "Admin mode",
+                                fontSize = 24.sp,
+                                fontFamily = FontFamily.Monospace)
                         }
                     }
                 }
