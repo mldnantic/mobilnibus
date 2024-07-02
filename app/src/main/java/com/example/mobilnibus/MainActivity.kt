@@ -23,6 +23,7 @@ import com.example.mobilnibus.screens.AddBusStopScreen
 import com.example.mobilnibus.screens.MapScreen
 import com.example.mobilnibus.screens.SettingsScreen
 import com.example.mobilnibus.screens.StartScreen
+import com.example.mobilnibus.screens.ViewBusStopScreen
 import com.example.mobilnibus.storage.BusStopStorageService
 import com.example.mobilnibus.storage.UserStorageService
 import com.example.mobilnibus.viemodels.BusStopViewModel
@@ -140,7 +141,7 @@ fun MobilniBusApp(
             val busStopsList = busStopViewModel.busStops.collectAsState(initial = listOf())
             MapScreen(auth,mainActivity,userViewModel,busStopViewModel,
                 navigateToSettings = {navController.navigate(Screens.SettingsScreen.name)},
-
+                navigateToViewBusStop = {navController.navigate(Screens.ViewBusStopScreen.name)},
                 onMapLongClick = { latLng ->
                     editBusStopViewModel.setLatLng(latLng.latitude,latLng.longitude)
                     navController.navigate(Screens.AddBusStopScreen.name) },
@@ -151,6 +152,13 @@ fun MobilniBusApp(
         {
             AddBusStopScreen(editBusStopViewModel = editBusStopViewModel,
                 busStopViewModel = busStopViewModel,
+                navigateToMap = {navController.popBackStack()})
+        }
+
+        composable(Screens.ViewBusStopScreen.name)
+        {
+            ViewBusStopScreen(busStopViewModel = busStopViewModel,
+                userViewModel=userViewModel,
                 navigateToMap = {navController.popBackStack()})
         }
 
@@ -174,5 +182,6 @@ enum class Screens{
     StartScreen,
     MapScreen,
     AddBusStopScreen,
-    SettingsScreen
+    SettingsScreen,
+    ViewBusStopScreen
 }

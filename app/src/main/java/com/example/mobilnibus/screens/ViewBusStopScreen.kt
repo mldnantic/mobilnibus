@@ -1,5 +1,6 @@
 package com.example.mobilnibus.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,28 +15,38 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.mobilnibus.model.BusStopModel
 import com.example.mobilnibus.viemodels.BusStopViewModel
+import com.example.mobilnibus.viemodels.UserViewModel
 
 @Composable
-fun ViewBusStopScreen(busStopViewModel: BusStopViewModel,
-                  navigateToMap: () -> Unit) {
+fun ViewBusStopScreen(
+    busStopViewModel: BusStopViewModel,
+    userViewModel: UserViewModel,
+    navigateToMap: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally)
     {
         BusStopCard(busStop = busStopViewModel.busStop)
-        Row {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(6.dp,8.dp),
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
             Button(modifier = Modifier.padding(12.dp),
                 onClick = {
+                    busStopViewModel.resetCurrentBusStop()
                     navigateToMap()
                 }) {
                 Text(text = "Back")
             }
-            Button(modifier = Modifier.padding(12.dp),
-                onClick = {
-                    busStopViewModel.deleteBusStop(busStopViewModel.busStop.id)
-                    navigateToMap()
-                }) {
-                Text(text = "Delete Bus stop")
+            if(userViewModel.currentUserModel.role=="admin")
+            {
+                Button(modifier = Modifier.padding(12.dp),
+                    onClick = {
+                        busStopViewModel.deleteBusStop(busStopViewModel.busStop.id)
+                        navigateToMap()
+                    }) {
+                    Text(text = "Delete Bus stop")
+                }
             }
         }
     }

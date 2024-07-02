@@ -49,6 +49,7 @@ fun MapScreen(
     userViewModel: UserViewModel,
     busStopViewModel: BusStopViewModel,
     navigateToSettings: () -> Unit,
+    navigateToViewBusStop: () ->Unit,
     onMapLongClick:(LatLng) ->Unit,
     list: List<BusStopModel>)
 {
@@ -109,7 +110,7 @@ fun MapScreen(
                             icon = BitmapDescriptorFactory.fromResource(R.drawable.bus_stop),
                             onClick ={
                                 busStopViewModel.setCurrentBusStop(busStop)
-
+                                navigateToViewBusStop()
                                 return@Marker false
                             }
                         )

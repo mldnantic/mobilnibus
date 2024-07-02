@@ -15,16 +15,10 @@ class BusStopStorageService(private val firestore: FirebaseFirestore){
                 .orderBy(CREATED_AT_FIELD, Query.Direction.DESCENDING)
                 .dataObjects()
 
-    suspend fun getBusStopByID(busStopId: String): BusStopModel? =
-        firestore.collection(BUSSTOP_COLLECTION).document(busStopId).get().await().toObject()
-
     suspend fun save(busStopModel: BusStopModel): String {
         val updatedBusStop = busStopModel.copy()
         return firestore.collection(BUSSTOP_COLLECTION).add(updatedBusStop).await().id
     }
-
-    suspend fun update(busStopModel: BusStopModel): Void? =
-        firestore.collection(BUSSTOP_COLLECTION).document(busStopModel.id).set(busStopModel).await()
 
     suspend fun delete(busStopId: String) {
         firestore.collection(BUSSTOP_COLLECTION).document(busStopId).delete().await()
