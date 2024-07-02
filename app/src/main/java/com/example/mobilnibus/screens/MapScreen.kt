@@ -26,6 +26,7 @@ import com.example.mobilnibus.MainActivity
 import com.example.mobilnibus.R
 import com.example.mobilnibus.location.LocationService
 import com.example.mobilnibus.model.BusStopModel
+import com.example.mobilnibus.viemodels.BusMarkerViewModel
 import com.example.mobilnibus.viemodels.BusStopViewModel
 import com.example.mobilnibus.viemodels.UserViewModel
 import com.google.android.gms.location.Geofence
@@ -51,8 +52,11 @@ fun MapScreen(
     navigateToSettings: () -> Unit,
     navigateToViewBusStop: () ->Unit,
     onMapLongClick:(LatLng) ->Unit,
+    busMarkerViewModel: BusMarkerViewModel,
     list: List<BusStopModel>)
 {
+    val busMarkersList = busMarkerViewModel.busMarkers.collectAsState(initial = listOf())
+
     val nis = LatLng(43.321445, 21.896104)
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(nis, 15f)
@@ -89,7 +93,9 @@ fun MapScreen(
                 verticalArrangement = Arrangement.Center
             ) {
                 GoogleMap(
-                    modifier = Modifier.fillMaxWidth().fillMaxHeight(fraction = 0.9f),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(fraction = 0.9f),
                     cameraPositionState = cameraPositionState,
                     properties = properties,
                     uiSettings = uiSettings,
@@ -115,14 +121,23 @@ fun MapScreen(
                             }
                         )
                     }
+                    busMarkersList.value.forEach{
+                        val busMarker = it
+                        Marker(
+                            title = busMarker.linija)
+                    }
                 }
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(6.dp,8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(6.dp, 8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     ElevatedButton(
                         onClick = { navigateToSettings() },
-                        modifier = Modifier.fillMaxHeight().padding(2.dp, 0.dp)
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .padding(2.dp, 0.dp)
                     )
                     {
                         Text(text = "⚙️", fontSize = 24.sp)
@@ -136,17 +151,12 @@ fun MapScreen(
                             else {
                                 Toast.makeText(mainActivity, "Location service unavailable", Toast.LENGTH_SHORT).show()
                             } },
-                        modifier = Modifier.fillMaxHeight().padding(2.dp, 0.dp)
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .padding(2.dp, 0.dp)
                     )
                     {
                         Text(text = "📌", fontSize = 24.sp)
-                    }
-                    ElevatedButton(
-                        onClick = { /*TODO*/ },
-                        modifier = Modifier.fillMaxHeight().padding(2.dp, 0.dp)
-                    )
-                    {
-                        Text(text = "🏅", fontSize = 24.sp)
                     }
                 }
             }

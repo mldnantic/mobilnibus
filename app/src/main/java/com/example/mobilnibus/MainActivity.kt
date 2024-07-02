@@ -24,8 +24,11 @@ import com.example.mobilnibus.screens.MapScreen
 import com.example.mobilnibus.screens.SettingsScreen
 import com.example.mobilnibus.screens.StartScreen
 import com.example.mobilnibus.screens.ViewBusStopScreen
+import com.example.mobilnibus.storage.BusMarkerStorageService
 import com.example.mobilnibus.storage.BusStopStorageService
 import com.example.mobilnibus.storage.UserStorageService
+import com.example.mobilnibus.viemodels.BusMarkerViewModel
+import com.example.mobilnibus.viemodels.BusMarkerViewModelFactory
 import com.example.mobilnibus.viemodels.BusStopViewModel
 import com.example.mobilnibus.viemodels.BusStopViewModelFactory
 import com.example.mobilnibus.viemodels.EditBusStopViewModel
@@ -49,6 +52,10 @@ class MainActivity : ComponentActivity() {
 
     private val busStopViewModel: BusStopViewModel by viewModels {
         BusStopViewModelFactory(BusStopStorageService((application as MobilniBusApp).db))
+    }
+
+    val busMarkerViewModel: BusMarkerViewModel by viewModels {
+        BusMarkerViewModelFactory(BusMarkerStorageService((application as MobilniBusApp).db))
     }
 
     private fun startLocService() {
@@ -82,7 +89,7 @@ class MainActivity : ComponentActivity() {
         setContent {
                 Surface(modifier = Modifier.fillMaxSize())
                 {
-                    MobilniBusApp(auth, this,userViewModel,busStopViewModel,
+                    MobilniBusApp(auth, this,userViewModel,busStopViewModel,busMarkerViewModel,
                         svcStart = {
                             startLocService()
                         },
@@ -119,6 +126,7 @@ fun MobilniBusApp(
     mainActivity: MainActivity,
     userViewModel: UserViewModel,
     busStopViewModel: BusStopViewModel,
+    busMarkerViewModel: BusMarkerViewModel,
     svcStart:()->Unit,
     svcStop:()->Unit)
 {
@@ -145,6 +153,7 @@ fun MobilniBusApp(
                 onMapLongClick = { latLng ->
                     editBusStopViewModel.setLatLng(latLng.latitude,latLng.longitude)
                     navController.navigate(Screens.AddBusStopScreen.name) },
+                busMarkerViewModel=busMarkerViewModel,
                 list = busStopsList.value)
         }
 
@@ -166,6 +175,7 @@ fun MobilniBusApp(
         {
             SettingsScreen(auth,
                 userViewModel,
+                busMarkerViewModel,
                 navigateToStart = {
                     navController.popBackStack(Screens.StartScreen.name,inclusive = false)
                 },

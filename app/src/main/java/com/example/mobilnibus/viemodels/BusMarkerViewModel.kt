@@ -14,8 +14,19 @@ import kotlinx.coroutines.launch
 
 class BusMarkerViewModel(private val storageService: BusMarkerStorageService): ViewModel() {
 
+    var busMarker: BusMarkerModel by mutableStateOf(BusMarkerModel())
+        private set
 
     val busMarkers: Flow<List<BusMarkerModel>> = storageService.busmarkers
+
+    fun setCurrentBusMarker(busMarkerModel: BusMarkerModel){
+        busMarker=busMarkerModel
+    }
+
+    fun resetCurrentBusMarker()
+    {
+        busMarker=BusMarkerModel()
+    }
 
     fun addBusMarker(busId:String,linija:String,lat:Double,lng:Double)
     {
@@ -36,7 +47,7 @@ class BusMarkerViewModel(private val storageService: BusMarkerStorageService): V
 
 class BusMarkerViewModelFactory(private val storageService: BusMarkerStorageService): ViewModelProvider.Factory{
     override fun <T: ViewModel> create(modelClass:Class<T>):T{
-        if(modelClass.isAssignableFrom(BusStopViewModel::class.java)){
+        if(modelClass.isAssignableFrom(BusMarkerViewModel::class.java)){
             return BusMarkerViewModel(storageService) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

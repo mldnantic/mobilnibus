@@ -28,6 +28,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mobilnibus.location.LocationService
+import com.example.mobilnibus.viemodels.BusMarkerViewModel
 import com.example.mobilnibus.viemodels.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
 
@@ -35,6 +37,7 @@ import com.google.firebase.auth.FirebaseAuth
 fun SettingsScreen(
     auth: FirebaseAuth,
     userViewModel: UserViewModel,
+    busMarkerViewModel: BusMarkerViewModel,
     navigateToStart:()->Unit,
     navigateBack:()->Unit,
     startSvc:()->Unit,
